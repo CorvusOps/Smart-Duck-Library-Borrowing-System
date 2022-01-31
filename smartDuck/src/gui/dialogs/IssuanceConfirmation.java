@@ -63,7 +63,7 @@ public class IssuanceConfirmation extends JDialog {
 			gbc_scrollPane.gridy = 0;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			{
-				ConfirmationPanel panel = new ConfirmationPanel();
+				IssueBookConfirmationPanel panel = new IssueBookConfirmationPanel();
 				panel.setPreferredSize(new Dimension(370, 600));
 				scrollPane.setViewportView(panel);
 			}

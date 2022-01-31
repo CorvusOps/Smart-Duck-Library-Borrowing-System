@@ -8,17 +8,17 @@ import java.awt.TextField;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 
-public class ConfirmationPanel extends JPanel {
+public class IssueBookConfirmationPanel extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public ConfirmationPanel() {
+	public IssueBookConfirmationPanel() {
 		setBackground(new Color(255, 255, 204));
 		setLayout(null);
 		
 		JLabel lblBookDetails = new JLabel("Book Details");
-		lblBookDetails.setIcon(new ImageIcon(ConfirmationPanel.class.getResource("/img/iconBook.png")));
+		lblBookDetails.setIcon(new ImageIcon(IssueBookConfirmationPanel.class.getResource("/img/bookConfirmation_50px.png")));
 		lblBookDetails.setForeground(new Color(204, 102, 51));
 		lblBookDetails.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblBookDetails.setBounds(25, 90, 213, 50);
@@ -60,7 +60,7 @@ public class ConfirmationPanel extends JPanel {
 		add(AuthorBookDetail);
 		
 		JLabel lblAccountDetails = new JLabel("Account Details");
-		lblAccountDetails.setIcon(new ImageIcon("C:\\Users\\JAN NICOLE CASILLAN\\eclipse-workspace\\AppDev-Finals\\img\\Account.png"));
+		lblAccountDetails.setIcon(new ImageIcon(IssueBookConfirmationPanel.class.getResource("/img/addUser_50px.png")));
 		lblAccountDetails.setForeground(new Color(204, 102, 51));
 		lblAccountDetails.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblAccountDetails.setBounds(25, 305, 188, 50);
@@ -111,15 +111,16 @@ public class ConfirmationPanel extends JPanel {
 		add(lblDepartment);
 		
 		JLabel lblReviewBorrowForm = new JLabel("REVIEW BORROW FORM");
+		lblReviewBorrowForm.setIcon(new ImageIcon(IssueBookConfirmationPanel.class.getResource("/img/books_50px.png")));
 		lblReviewBorrowForm.setForeground(new Color(102, 0, 0));
 		lblReviewBorrowForm.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblReviewBorrowForm.setBounds(79, 30, 213, 37);
+		lblReviewBorrowForm.setBounds(45, 11, 273, 56);
 		add(lblReviewBorrowForm);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(51, 0, 0));
 		separator.setForeground(new Color(51, 0, 0));
-		separator.setBounds(79, 59, 213, 2);
+		separator.setBounds(105, 58, 213, 2);
 		add(separator);
 
 	}

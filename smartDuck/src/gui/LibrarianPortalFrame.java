@@ -21,6 +21,8 @@ import javax.swing.border.LineBorder;
 
 import gui.dialogs.AddAccount;
 import gui.dialogs.AddBookDialog;
+import gui.dialogs.IssueBook;
+import gui.dialogs.ReturnBookDialog;
 import gui.panels.BorrowFormPanel;
 import gui.panels.ReturnFormPanel;
 
@@ -119,7 +121,7 @@ public class LibrarianPortalFrame extends JFrame {
 		JLabel lblAddAccountImgLabel = new JLabel("");
 		lblAddAccountImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblAddAccountImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image FormImage = new ImageIcon(this.getClass().getResource("/img/addUser_150px.png")).getImage();
+		Image FormImage = new ImageIcon(this.getClass().getResource("/img/addUser_w_tag_150px.png")).getImage();
 		panelForm.setLayout(new GridLayout(0, 1, 0, 0));
 		lblAddAccountImgLabel.setIcon(new ImageIcon(FormImage));
 		lblAddAccountImgLabel.setBounds(27, 19, 106, 130);
@@ -145,9 +147,17 @@ public class LibrarianPortalFrame extends JFrame {
 		
 		//img
 		JLabel lblBorrowFormImgLabel = new JLabel("");
+		lblBorrowFormImgLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			// redirect to IssueBookDialog
+				IssueBook objFormDialog = new IssueBook();
+				objFormDialog.setVisible(true);
+			}
+		});
 		lblBorrowFormImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblBorrowFormImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image AddLibrarianImage = new ImageIcon(this.getClass().getResource("/img/borrowForm_150px.png")).getImage();
+		Image AddLibrarianImage = new ImageIcon(this.getClass().getResource("/img/borrowForm_w_tag_150px.png")).getImage();
 		panelBorrowForm.setLayout(new GridLayout(0, 1, 0, 0));
 		lblBorrowFormImgLabel.setIcon(new ImageIcon(AddLibrarianImage));
 		lblBorrowFormImgLabel.setBounds(27, 19, 106, 130);
@@ -173,9 +183,17 @@ public class LibrarianPortalFrame extends JFrame {
 
 		//img
 		JLabel lblReturnBookImgLabel = new JLabel("");
+		lblReturnBookImgLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// redirect to ReturnBookDialog
+				ReturnBookDialog objFormDialog = new ReturnBookDialog();
+				objFormDialog.setVisible(true);
+			}
+		});
 		lblReturnBookImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblReturnBookImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image ReturnBookImage = new ImageIcon(this.getClass().getResource("/img/returnBook_150px.png")).getImage();
+		Image ReturnBookImage = new ImageIcon(this.getClass().getResource("/img/returnBook_w_tag_150px.png")).getImage();
 		panelReturnForm.setLayout(new GridLayout(0, 1, 0, 0));
 		lblReturnBookImgLabel.setIcon(new ImageIcon(ReturnBookImage));
 		lblReturnBookImgLabel.setBounds(27, 19, 106, 130);
@@ -204,7 +222,7 @@ public class LibrarianPortalFrame extends JFrame {
 		JLabel lblAddBookImgLabel = new JLabel("");
 		lblAddBookImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblAddBookImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image AddBookImage = new ImageIcon(this.getClass().getResource("/img/book_150px.png")).getImage();
+		Image AddBookImage = new ImageIcon(this.getClass().getResource("/img/addBook_w_tag_150px.png")).getImage();
 		panelAddBook.setLayout(new GridLayout(0, 1, 0, 0));
 		lblAddBookImgLabel.setIcon(new ImageIcon(AddBookImage));
 		lblAddBookImgLabel.setBounds(27, 19, 106, 130);
@@ -233,7 +251,7 @@ public class LibrarianPortalFrame extends JFrame {
 		JLabel lblLogImgLabel = new JLabel("");
 		lblLogImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblLogImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image LogImage = new ImageIcon(this.getClass().getResource("/img/logs_300x150px.png")).getImage();
+		Image LogImage = new ImageIcon(this.getClass().getResource("/img/logs_w_tag_300x150px.png")).getImage();
 		panelViewLog.setLayout(new GridLayout(0, 1, 0, 0));
 		lblLogImgLabel.setIcon(new ImageIcon(LogImage));
 		lblLogImgLabel.setBounds(27, 19, 106, 130);
