@@ -289,13 +289,13 @@ public class LogFrame extends JFrame {
 //return button
 		
 		JButton btnReturn = new JButton("Return");
-		/*btnReturn.addActionListener(new ActionListener() {
+		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
-				LibrarianPage pageLibrarian = new LibrarianPage();
+				LibrarianPortalFrame pageLibrarian = new LibrarianPortalFrame();
 				pageLibrarian.setVisible(true);
 			}
-		});*/
+		});
 		btnReturn.setBackground(new Color(255, 228, 181));
 		btnReturn.setFocusPainted(false);
 		btnReturn.setBorderPainted(false);

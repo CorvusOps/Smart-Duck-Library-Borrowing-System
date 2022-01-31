@@ -10,12 +10,19 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import gui.dialogs.AddAccount;
+import gui.dialogs.AddBookDialog;
+import gui.panels.BorrowFormPanel;
+import gui.panels.ReturnFormPanel;
 
 public class LibrarianPortalFrame extends JFrame {
 
@@ -42,9 +49,9 @@ public class LibrarianPortalFrame extends JFrame {
 	 */
 	public LibrarianPortalFrame() {
 		setTitle("Smart Owl Library");
-		setMinimumSize(new Dimension(550, 430));
+		setMinimumSize(new Dimension(500, 500));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 550, 550);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(244, 164, 96));
@@ -63,15 +70,15 @@ public class LibrarianPortalFrame extends JFrame {
 		//WelcomePanel
 		JPanel panelWelcome = new JPanel();
 		panelWelcome.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
-		/*panelWelcome.addMouseListener(new MouseAdapter() {
+		panelWelcome.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				WelcomePage objWelcome = new WelcomePage();
+				WelcomePageFrame objWelcome = new WelcomePageFrame();
 				objWelcome.setVisible(true);
 			}
 		});
-		*/
+		
 		GridBagConstraints gbc_panelWelcome = new GridBagConstraints();
 		gbc_panelWelcome.gridwidth = 3;
 		gbc_panelWelcome.insets = new Insets(0, 0, 5, 0);
@@ -83,25 +90,25 @@ public class LibrarianPortalFrame extends JFrame {
 		JLabel lblWelcomeImgLabel = new JLabel("");
 		lblWelcomeImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblWelcomeImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//Image WelcomeImage = new ImageIcon(this.getClass().getResource("/LogoWelcomeLibrarian500px100px.png")).getImage();
+		Image WelcomeImage = new ImageIcon(this.getClass().getResource("/img/smartDuckWelcome_500x125px.png")).getImage();
 		panelWelcome.setLayout(new GridLayout(0, 1, 0, 0));
-		//lblWelcomeImgLabel.setIcon(new ImageIcon(WelcomeImage));
+		lblWelcomeImgLabel.setIcon(new ImageIcon(WelcomeImage));
 		lblWelcomeImgLabel.setBounds(27, 19, 106, 130);
 		panelWelcome.add(lblWelcomeImgLabel);
 		
-//Form Panel Top in
+//Add User Form Panel
 		
-		//FormPanel
+		//Add User Panel
 		JPanel panelForm = new JPanel();
 		panelForm.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
-		/*panelForm.addMouseListener(new MouseAdapter() {
+		panelForm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				FormDialog objFormDialog = new FormDialog();
+				AddAccount objFormDialog = new AddAccount();
 				objFormDialog.setVisible(true);
 			}
 		});
-		*/
+		
 		GridBagConstraints gbc_panelForm = new GridBagConstraints();
 		gbc_panelForm.insets = new Insets(0, 0, 5, 5);
 		gbc_panelForm.gridx = 0;
@@ -109,113 +116,113 @@ public class LibrarianPortalFrame extends JFrame {
 		contentPane.add(panelForm, gbc_panelForm);
 		
 		//img
-		JLabel lblFormImgLabel = new JLabel("");
-		lblFormImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
-		lblFormImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image FormImage = new ImageIcon(this.getClass().getResource("/img/book_150px.png")).getImage();
+		JLabel lblAddAccountImgLabel = new JLabel("");
+		lblAddAccountImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
+		lblAddAccountImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		Image FormImage = new ImageIcon(this.getClass().getResource("/img/addUser_150px.png")).getImage();
 		panelForm.setLayout(new GridLayout(0, 1, 0, 0));
-		lblFormImgLabel.setIcon(new ImageIcon(FormImage));
-		lblFormImgLabel.setBounds(27, 19, 106, 130);
-		panelForm.add(lblFormImgLabel);
+		lblAddAccountImgLabel.setIcon(new ImageIcon(FormImage));
+		lblAddAccountImgLabel.setBounds(27, 19, 106, 130);
+		panelForm.add(lblAddAccountImgLabel);
 		
-//Add Book to Library Panel in
+//Borrow Form
 		
 		//AddBookPanel
-		JPanel panelAddBook = new JPanel();
-		panelAddBook.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
-		/*panelAddBook.addMouseListener(new MouseAdapter() {
+		JPanel panelBorrowForm = new JPanel();
+		panelBorrowForm.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
+		panelBorrowForm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				AddBookDialog objBook = new AddBookDialog();
-				objBook.setVisible(true);
+				BorrowFormPanel objForm = new BorrowFormPanel();
+				objForm.setVisible(true);
 			}
-		});*/
-		GridBagConstraints gbc_panelAddBook = new GridBagConstraints();
-		gbc_panelAddBook.insets = new Insets(0, 0, 5, 5);
-		gbc_panelAddBook.gridx = 1;
-		gbc_panelAddBook.gridy = 1;
-		contentPane.add(panelAddBook, gbc_panelAddBook);
+		});
+		GridBagConstraints gbc_panelBorrowForm = new GridBagConstraints();
+		gbc_panelBorrowForm.insets = new Insets(0, 0, 5, 5);
+		gbc_panelBorrowForm.gridx = 1;
+		gbc_panelBorrowForm.gridy = 1;
+		contentPane.add(panelBorrowForm, gbc_panelBorrowForm);
 		
 		//img
-		JLabel lblAddLibrarianImgLabel = new JLabel("");
-		lblAddLibrarianImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
-		lblAddLibrarianImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image AddLibrarianImage = new ImageIcon(this.getClass().getResource("/img/book_150px.png")).getImage();
-		panelAddBook.setLayout(new GridLayout(0, 1, 0, 0));
-		lblAddLibrarianImgLabel.setIcon(new ImageIcon(AddLibrarianImage));
-		lblAddLibrarianImgLabel.setBounds(27, 19, 106, 130);
-		panelAddBook.add(lblAddLibrarianImgLabel);
+		JLabel lblBorrowFormImgLabel = new JLabel("");
+		lblBorrowFormImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
+		lblBorrowFormImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		Image AddLibrarianImage = new ImageIcon(this.getClass().getResource("/img/borrowForm_150px.png")).getImage();
+		panelBorrowForm.setLayout(new GridLayout(0, 1, 0, 0));
+		lblBorrowFormImgLabel.setIcon(new ImageIcon(AddLibrarianImage));
+		lblBorrowFormImgLabel.setBounds(27, 19, 106, 130);
+		panelBorrowForm.add(lblBorrowFormImgLabel);
 		
-//Add ISBN Panel in
+//Return Form Panel
 		
-		//AddISBNPanel
-		JPanel panelAddISBN = new JPanel();
-		panelAddISBN.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
-		/*panelAddISBN.addMouseListener(new MouseAdapter() {
+		//ReturnFormPanel
+		JPanel panelReturnForm = new JPanel();
+		panelReturnForm.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
+		panelReturnForm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				AddISBNDialog objISBN = new AddISBNDialog();
-				objISBN.setVisible(true);
+				ReturnFormPanel objReturn = new ReturnFormPanel();
+				objReturn.setVisible(true);
 			}
-		});*/
-		GridBagConstraints gbc_panelAddISBN = new GridBagConstraints();
-		gbc_panelAddISBN.insets = new Insets(0, 0, 5, 0);
-		gbc_panelAddISBN.gridx = 2;
-		gbc_panelAddISBN.gridy = 1;
-		contentPane.add(panelAddISBN, gbc_panelAddISBN);
+		});
+		GridBagConstraints gbc_panelReturnForm = new GridBagConstraints();
+		gbc_panelReturnForm.insets = new Insets(0, 0, 5, 0);
+		gbc_panelReturnForm.gridx = 2;
+		gbc_panelReturnForm.gridy = 1;
+		contentPane.add(panelReturnForm, gbc_panelReturnForm);
 
+		//img
+		JLabel lblReturnBookImgLabel = new JLabel("");
+		lblReturnBookImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
+		lblReturnBookImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		Image ReturnBookImage = new ImageIcon(this.getClass().getResource("/img/returnBook_150px.png")).getImage();
+		panelReturnForm.setLayout(new GridLayout(0, 1, 0, 0));
+		lblReturnBookImgLabel.setIcon(new ImageIcon(ReturnBookImage));
+		lblReturnBookImgLabel.setBounds(27, 19, 106, 130);
+		panelReturnForm.add(lblReturnBookImgLabel);
+		
+//AddBook Panel
+		
+		//AddBook Panel
+		JPanel panelAddBook = new JPanel();
+		panelAddBook.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
+		panelAddBook.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			AddBookDialog objAddBook = new AddBookDialog();
+			objAddBook.setVisible(true);
+		}
+		});
+		
+		GridBagConstraints gbc_panelAddBook = new GridBagConstraints();
+		gbc_panelAddBook.insets = new Insets(0, 0, 0, 5);
+		gbc_panelAddBook.gridx = 0;
+		gbc_panelAddBook.gridy = 2;
+		contentPane.add(panelAddBook, gbc_panelAddBook);
+		
 		//img
 		JLabel lblAddBookImgLabel = new JLabel("");
 		lblAddBookImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblAddBookImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		Image AddBookImage = new ImageIcon(this.getClass().getResource("/img/book_150px.png")).getImage();
-		panelAddISBN.setLayout(new GridLayout(0, 1, 0, 0));
+		panelAddBook.setLayout(new GridLayout(0, 1, 0, 0));
 		lblAddBookImgLabel.setIcon(new ImageIcon(AddBookImage));
 		lblAddBookImgLabel.setBounds(27, 19, 106, 130);
-		panelAddISBN.add(lblAddBookImgLabel);
-		
-//New Panel
-		
-		//New Panel
-		JPanel panelNewPanel = new JPanel();
-		panelNewPanel.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
-		/*panelAddISBN.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			AddISBNDialog objISBN = new AddISBNDialog();
-			objISBN.setVisible(true);
-		}
-		});
-		*/
-		GridBagConstraints gbc_panelNewPanel = new GridBagConstraints();
-		gbc_panelNewPanel.insets = new Insets(0, 0, 0, 5);
-		gbc_panelNewPanel.gridx = 0;
-		gbc_panelNewPanel.gridy = 2;
-		contentPane.add(panelNewPanel, gbc_panelNewPanel);
-		
-		//img
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(new Rectangle(23, 123, 45, 67));
-		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image AddNewImage = new ImageIcon(this.getClass().getResource("/img/book_150px.png")).getImage();
-		panelNewPanel.setLayout(new GridLayout(0, 1, 0, 0));
-		lblNewLabel.setIcon(new ImageIcon(AddNewImage));
-		lblNewLabel.setBounds(27, 19, 106, 130);
-		panelNewPanel.add(lblNewLabel);
+		panelAddBook.add(lblAddBookImgLabel);
 		
 //View Log Panel in
 		
 		//viewLogPanel
 		JPanel panelViewLog = new JPanel();
 		panelViewLog.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
-		/*panelViewLog.addMouseListener(new MouseAdapter() {
+		panelViewLog.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				LogFramePage logs = new LogFramePage();
+				LogFrame logs = new LogFrame();
 				logs.setVisible(true);
 			}
-		});*/
+		});
 		GridBagConstraints gbc_panelViewLog = new GridBagConstraints();
 		gbc_panelViewLog.gridwidth = 2;
 		gbc_panelViewLog.gridx = 1;
@@ -226,9 +233,9 @@ public class LibrarianPortalFrame extends JFrame {
 		JLabel lblLogImgLabel = new JLabel("");
 		lblLogImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblLogImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//Image LogImage = new ImageIcon(this.getClass().getResource("/LogoLog250px125px.png")).getImage();
+		Image LogImage = new ImageIcon(this.getClass().getResource("/img/logs_300x150px.png")).getImage();
 		panelViewLog.setLayout(new GridLayout(0, 1, 0, 0));
-		//lblLogImgLabel.setIcon(new ImageIcon(LogImage));
+		lblLogImgLabel.setIcon(new ImageIcon(LogImage));
 		lblLogImgLabel.setBounds(27, 19, 106, 130);
 		panelViewLog.add(lblLogImgLabel);	
 	}
