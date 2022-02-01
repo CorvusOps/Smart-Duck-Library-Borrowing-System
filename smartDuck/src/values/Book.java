@@ -9,8 +9,8 @@ public class Book {
 		return ISBN;
 	}
 
-	public void setISBN(String tISBN) {
-		ISBN = tISBN;
+	public void setISBN(String iSBN) {
+		ISBN = iSBN;
 	}
 
 	public String getTitle() {
@@ -25,7 +25,7 @@ public class Book {
 		return Author;
 	}
 
-	public void setAuthor(String tAuthor) {
-		Author = tAuthor;
+	public void setAuthor(String author) {
+		Author = author;
 	}
 }

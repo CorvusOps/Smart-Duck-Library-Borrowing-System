@@ -6,44 +6,46 @@ public class Account {
 					Course,
 					Department,
 					Email;
-	
-	public void setAccountId(String tAccId) {
-		AccountId = tAccId;
-	}
-	
+
 	public String getAccountId() {
 		return AccountId;
 	}
-	
-	public void setName(String tName) {
-		Name = tName;
+
+	public void setAccountId(String accountId) {
+		AccountId = accountId;
 	}
-	
+
 	public String getName() {
 		return Name;
 	}
-	
-	public void setCourse(String tCourse) {
-		Course = tCourse;
+
+	public void setName(String name) {
+		Name = name;
 	}
-	
+
 	public String getCourse() {
 		return Course;
 	}
-	
-	public void setDepartment(String tDepartment) {
-		Department = tDepartment;
+
+	public void setCourse(String course) {
+		Course = course;
 	}
-	
+
 	public String getDepartment() {
 		return Department;
 	}
-	
-	public void setEmail(String tEmail) {
-		Email = tEmail;
+
+	public void setDepartment(String department) {
+		Department = department;
 	}
-	
-	public String setEmail() {
+
+	public String getEmail() {
 		return Email;
 	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
+	
+	
 }
