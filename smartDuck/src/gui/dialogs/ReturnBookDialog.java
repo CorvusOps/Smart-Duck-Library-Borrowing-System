@@ -14,22 +14,23 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class AddBookDialog extends JDialog {
+import com.toedter.calendar.JDateChooser;
+
+public class ReturnBookDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField ISBNtextField;
-	private JTextField TitletextField;
-	private JTextField AuthortextField;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			AddBookDialog dialog = new AddBookDialog();
+			ReturnBookDialog dialog = new ReturnBookDialog();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -40,7 +41,7 @@ public class AddBookDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public AddBookDialog() {
+	public ReturnBookDialog() {
 		setBounds(100, 100, 450, 500);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 204, 153));
@@ -62,64 +63,58 @@ public class AddBookDialog extends JDialog {
 		gbc_panel.gridy = 0;
 		contentPanel.add(panel, gbc_panel);
 		
-		JLabel lblAddBook = new JLabel("Add Book");
-		lblAddBook.setIcon(new ImageIcon(AddBookDialog.class.getResource("/img/addBook_50px.png")));
-		lblAddBook.setForeground(new Color(255, 102, 0));
-		lblAddBook.setFont(new Font("Tahoma", Font.BOLD, 22));
-		lblAddBook.setBounds(37, 33, 237, 74);
-		panel.add(lblAddBook);
+		JLabel lblIssueBook = new JLabel("Return Book");
+		lblIssueBook.setIcon(new ImageIcon(ReturnBookDialog.class.getResource("/img/returnBookDialog_50px.png")));
+		lblIssueBook.setForeground(new Color(255, 102, 0));
+		lblIssueBook.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblIssueBook.setBounds(99, 38, 200, 74);
+		panel.add(lblIssueBook);
 		
-		JLabel lbISBN = new JLabel("ISBN :");
-		lbISBN.setForeground(new Color(153, 102, 0));
-		lbISBN.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbISBN.setBounds(39, 133, 98, 17);
-		panel.add(lbISBN);
+		JSeparator separator = new JSeparator();
+		separator.setForeground(new Color(204, 102, 0));
+		separator.setBackground(new Color(204, 102, 0));
+		separator.setBounds(154, 95, 145, 8);
+		panel.add(separator);
 		
-		JLabel lblTitle = new JLabel("Title :");
-		lblTitle.setForeground(new Color(153, 102, 0));
-		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTitle.setBounds(38, 185, 89, 17);
-		panel.add(lblTitle);
-		
-		JLabel lblAuthor = new JLabel("Author :");
-		lblAuthor.setForeground(new Color(153, 102, 0));
-		lblAuthor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAuthor.setBounds(38, 238, 98, 16);
-		panel.add(lblAuthor);
+		JLabel lblBorrowFormNo = new JLabel("Borrow Form No :");
+		lblBorrowFormNo.setForeground(new Color(153, 102, 0));
+		lblBorrowFormNo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblBorrowFormNo.setBounds(40, 146, 118, 16);
+		panel.add(lblBorrowFormNo);
 		
 		ISBNtextField = new JTextField();
 		ISBNtextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ISBNtextField.setColumns(10);
-		ISBNtextField.setBounds(147, 131, 232, 20);
+		ISBNtextField.setBounds(164, 144, 200, 20);
 		panel.add(ISBNtextField);
 		
-		TitletextField = new JTextField();
-		TitletextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		TitletextField.setColumns(10);
-		TitletextField.setBounds(147, 185, 232, 20);
-		panel.add(TitletextField);
+		JLabel lblReturnDate = new JLabel("Return Date :");
+		lblReturnDate.setForeground(new Color(153, 102, 0));
+		lblReturnDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblReturnDate.setBounds(40, 188, 84, 16);
+		panel.add(lblReturnDate);
 		
-		AuthortextField = new JTextField();
-		AuthortextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		AuthortextField.setColumns(10);
-		AuthortextField.setBounds(146, 236, 232, 20);
-		panel.add(AuthortextField);
+		JDateChooser ReturnDate = new JDateChooser();
+		ReturnDate.setBounds(164, 188, 200, 20);
+		panel.add(ReturnDate);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(255, 204, 153));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton AddAccountButton = new JButton("Add Book");
-				AddAccountButton.addMouseListener(new MouseAdapter() {
+				JButton ReturnButton = new JButton("View Details");
+				ReturnButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						
+						setVisible(false);
+						ReturnBookDetailsDialog viewDetails = new ReturnBookDetailsDialog();
+						viewDetails.setVisible(true);
 					}
 				});
-				AddAccountButton.setActionCommand("OK");
-				buttonPane.add(AddAccountButton);
-				getRootPane().setDefaultButton(AddAccountButton);
+				ReturnButton.setActionCommand("OK");
+				buttonPane.add(ReturnButton);
+				getRootPane().setDefaultButton(ReturnButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
