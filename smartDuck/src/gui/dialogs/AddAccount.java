@@ -13,9 +13,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import Execution.AccountEXE;
+import gui.LibrarianPortalFrame;
+import values.Account;
 
 public class AddAccount extends JDialog {
 
@@ -140,7 +145,32 @@ public class AddAccount extends JDialog {
 				AddAccountButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						
+						Account accountValues = new Account();
+				
+					//fields that needs to be filled out
+						boolean isFilled = !IDtextField.getText().equals("") && !NametextField.getText().equals("")
+											&& !DepartmenttextField.getText().equals("") && !CoursetextField.getText().equals("");
+						try {
+							if(isFilled) {
+								
+							//setting the values
+								AccountEXE.setValues(accountValues, IDtextField.getText(),
+														NametextField.getText(),
+														CoursetextField.getText(),
+														DepartmenttextField.getText(),
+														EmailtextField.getText());
+								
+								JOptionPane.showMessageDialog(null, AccountEXE.exeInsertStatements(accountValues));
+								
+								setVisible(false);
+								LibrarianPortalFrame frame = new LibrarianPortalFrame();
+								frame.setVisible(true);
+							} else {
+								JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
+								}
+							} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 					}
 				});
 				AddAccountButton.setActionCommand("OK");
