@@ -9,8 +9,9 @@ import values.Account;
 
 public class AccountEXE {
 	
-	public static void setValues (Account account, String AccountName, 
+	public static void setValues (Account account, String AccountID, String AccountName, 
 			String Course, String Department, String Email) {
+		account.setAccountId(AccountID);
 		account.setName(AccountName);
 		account.setCourse(Course);
 		account.setDepartment(Department);

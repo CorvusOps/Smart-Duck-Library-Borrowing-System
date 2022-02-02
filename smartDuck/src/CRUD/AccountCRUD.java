@@ -18,7 +18,8 @@ public class AccountCRUD {
 	
 	public static String setFields() {
 		String strfields = 
-						"(Name,"		+
+						"(AccountID, "  +
+						"Name,"		+
 						"Course,"       +
 						"Department,"	+
 						"Email)";
@@ -28,6 +29,7 @@ public class AccountCRUD {
 	public static  String setValues() {
 		String strfields = "VALUES(?,"+
 								"?,"  + 
+								"?,"  +
 								"?,"  +
 							    "?)";
 		return strfields;
@@ -41,16 +43,14 @@ public class AccountCRUD {
 			
 			objPreparedStatementObject = conn.prepareStatement("INSERT INTO account_table " + setFields()
 					+ setValues());
-			/*objPreparedStatementObject.setString(1, account.getAccountName());
-			objPreparedStatementObject.setString(2, account.getAddress());
-			objPreparedStatementObject.setString(3, account.getCity());
-			objPreparedStatementObject.setString(4, account.getProvince());
-			objPreparedStatementObject.setString(5, account.getCountry());
-			objPreparedStatementObject.setString(6, account.getRole());
-			objPreparedStatementObject.setString(7, account.getContactNum());
-			objPreparedStatementObject.setString(8, account.getEmail());
+			objPreparedStatementObject.setString(1, account.getAccountId());
+			objPreparedStatementObject.setString(2, account.getName());
+			objPreparedStatementObject.setString(3, account.getCourse());
+			objPreparedStatementObject.setString(4, account.getDepartment());
+			objPreparedStatementObject.setString(5, account.getEmail());
+			
 			intResult = objPreparedStatementObject.executeUpdate();
-			*/
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,20 +67,15 @@ public class AccountCRUD {
 			ojbResultSetObject = objPreparedStatementObject.executeQuery();
 		
 			while(ojbResultSetObject.next()) {
-				/*Account accounts = new Account();
-				accounts.setAccountID(ojbResultSetObject.getInt("AccountID"));
-				accounts.setAccountName(ojbResultSetObject.getString("AccountName"));
-				accounts.setAddress(ojbResultSetObject.getString("Address"));
-				accounts.setCity(ojbResultSetObject.getString("City"));
-				accounts.setProvince(ojbResultSetObject.getString("Province"));
-				accounts.setCountry(ojbResultSetObject.getString("Country"));
-				accounts.setRole(ojbResultSetObject.getString("Role"));
-				accounts.setContactNum(ojbResultSetObject.getString("ContactNum"));
+				Account accounts = new Account();
+				accounts.setAccountId(ojbResultSetObject.getString("AccountID"));
+				accounts.setName(ojbResultSetObject.getString("Name"));
+				accounts.setCourse(ojbResultSetObject.getString("Course"));
+				accounts.setDepartment(ojbResultSetObject.getString("Department"));
 				accounts.setEmail(ojbResultSetObject.getString("Email"));
-
 				
 				account.add(accounts);
-				*/
+
 			}
 		}catch(Exception e){
 		// TODO Auto-generated catch block

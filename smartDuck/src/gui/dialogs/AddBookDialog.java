@@ -13,9 +13,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import Execution.BookEXE;
+import gui.LibrarianPortalFrame;
+import values.Book;
 
 public class AddBookDialog extends JDialog {
 
@@ -114,7 +119,30 @@ public class AddBookDialog extends JDialog {
 				AddAccountButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						Book bookValues = new Book();
 						
+					//fields that needs to be filled out
+						boolean isFilled = !ISBNtextField.getText().equals("") && !TitletextField.getText().equals("")
+											&& !AuthortextField.getText().equals("");		
+						try {
+							if(isFilled) {
+								
+							//setting the values
+								BookEXE.setValues(bookValues, ISBNtextField.getText(),
+														TitletextField.getText(),
+														AuthortextField.getText());
+								
+								JOptionPane.showMessageDialog(null, BookEXE.exeInsertStatements(bookValues));
+								
+								setVisible(false);
+								LibrarianPortalFrame frame = new LibrarianPortalFrame();
+								frame.setVisible(true);
+							} else {
+								JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
+								}
+							} catch (Exception e1) {
+							e1.printStackTrace();
+						}
 					}
 				});
 				AddAccountButton.setActionCommand("OK");
