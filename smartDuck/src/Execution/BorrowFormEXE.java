@@ -11,9 +11,10 @@ import values.BorrowForm;
 public class BorrowFormEXE {
 	
 	public static void setValues (BorrowForm borrowForm, String AccountID, 
-			String ISBN, Date IssueDate, Date DueDate) {
+			String ISBN, String Status, Date IssueDate, Date DueDate) {
 		borrowForm.setAccountID(AccountID);
 		borrowForm.setISBN(ISBN);
+		borrowForm.setStatus(Status);
 		borrowForm.setIssueDate(IssueDate);
 		borrowForm.setDueDate(DueDate);
 	}
@@ -36,6 +37,7 @@ public class BorrowFormEXE {
 								borrowForms.getBorrowFormID(),
 								borrowForms.getAccountID(),
 								borrowForms.getISBN(),
+								borrowForms.getStatus(),
 								borrowForms.getIssueDate(),
 								borrowForms.getDueDate()
 								};

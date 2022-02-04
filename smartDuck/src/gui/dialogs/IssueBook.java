@@ -8,23 +8,30 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
+import CRUD.BorrowFormCRUD;
+import Execution.AccountEXE;
+import Execution.BorrowFormEXE;
+import gui.LibrarianPortalFrame;
+import values.BorrowForm;
+
 public class IssueBook extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField ISBNtextField;
-	private JTextField IDtextField;
 
 	/**
 	 * Launch the application.
@@ -83,23 +90,11 @@ public class IssueBook extends JDialog {
 		lblIsbn.setBounds(40, 146, 48, 16);
 		panel.add(lblIsbn);
 		
-		ISBNtextField = new JTextField();
-		ISBNtextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ISBNtextField.setColumns(10);
-		ISBNtextField.setBounds(143, 144, 211, 20);
-		panel.add(ISBNtextField);
-		
 		JLabel lblAccId = new JLabel("Account ID :");
 		lblAccId.setForeground(new Color(153, 102, 0));
 		lblAccId.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAccId.setBounds(40, 197, 84, 16);
 		panel.add(lblAccId);
-		
-		IDtextField = new JTextField();
-		IDtextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		IDtextField.setColumns(10);
-		IDtextField.setBounds(143, 195, 211, 20);
-		panel.add(IDtextField);
 		
 		JLabel lblIssueDate = new JLabel("Issue Date :");
 		lblIssueDate.setForeground(new Color(153, 102, 0));
@@ -108,6 +103,7 @@ public class IssueBook extends JDialog {
 		panel.add(lblIssueDate);
 		
 		JDateChooser IssueDate = new JDateChooser();
+		IssueDate.setDateFormatString("yyyy-MM-dd");
 		IssueDate.setBounds(143, 248, 211, 20);
 		panel.add(IssueDate);
 		
@@ -118,8 +114,23 @@ public class IssueBook extends JDialog {
 		panel.add(lblDueDate);
 		
 		JDateChooser DueDate = new JDateChooser();
+		DueDate.setDateFormatString("yyyy-MM-dd");
 		DueDate.setBounds(143, 303, 211, 20);
 		panel.add(DueDate);
+		
+		JComboBox ISBNcomboBox = new JComboBox();
+		ISBNcomboBox.setBackground(Color.WHITE);
+		ISBNcomboBox.setBounds(143, 145, 211, 22);
+		panel.add(ISBNcomboBox);
+		ISBNcomboBox.addItem("Select");
+		BorrowFormCRUD.ISBNComboBox(ISBNcomboBox);
+		
+		JComboBox AccountIDcomboBox = new JComboBox();
+		AccountIDcomboBox.setBackground(Color.WHITE);
+		AccountIDcomboBox.setBounds(143, 196, 211, 22);
+		panel.add(AccountIDcomboBox);
+		AccountIDcomboBox.addItem("Select");
+		BorrowFormCRUD.AccountIDComboBox(AccountIDcomboBox);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(255, 204, 153));
@@ -130,9 +141,42 @@ public class IssueBook extends JDialog {
 				IssueButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						setVisible(false);
-						IssuanceConfirmation confirmation = new IssuanceConfirmation();
-						confirmation.setVisible(true);
+						BorrowForm borrowFormValues = new BorrowForm();
+						
+						String ISBN = (String) ISBNcomboBox.getSelectedItem();
+						String AccountID = (String) AccountIDcomboBox.getSelectedItem();
+						//fields that needs to be filled out
+							boolean isFilled = !ISBN.equals("") && !ISBN.equals("Select")
+												&& !AccountID.equals("") && !AccountID.equals("Select");
+							try {
+								if(isFilled) {
+									
+									java.sql.Date issuedate = new java.sql.Date(IssueDate.getDate().getTime());
+									java.sql.Date duedate = new java.sql.Date(DueDate.getDate().getTime());
+									
+								//setting the values
+									BorrowFormEXE.setValues(borrowFormValues, AccountID,
+															ISBN,
+															"Issued",
+															issuedate,
+															duedate);
+									
+									JOptionPane.showMessageDialog(null, BorrowFormEXE.exeInsertStatements(borrowFormValues));
+									
+									setVisible(false);
+									IssuanceConfirmation confirmation = new IssuanceConfirmation(ISBN, AccountID);
+									confirmation.setVisible(true);
+									
+								} else {
+									JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
+									}
+								} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+							/*setVisible(false);
+							LibrarianPortalFrame frame = new LibrarianPortalFrame();
+							frame.setVisible(true);*/
+						
 					}
 				});
 				IssueButton.setActionCommand("OK");
@@ -145,6 +189,8 @@ public class IssueBook extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						dispose();
+						LibrarianPortalFrame frame = new LibrarianPortalFrame();
+						frame.setVisible(true);
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

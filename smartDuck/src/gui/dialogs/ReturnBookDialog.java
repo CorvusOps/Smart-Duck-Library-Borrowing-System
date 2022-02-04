@@ -20,10 +20,13 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
+import gui.LibrarianPortalFrame;
+
+import javax.swing.JComboBox;
+
 public class ReturnBookDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField ISBNtextField;
 
 	/**
 	 * Launch the application.
@@ -82,21 +85,20 @@ public class ReturnBookDialog extends JDialog {
 		lblBorrowFormNo.setBounds(40, 146, 118, 16);
 		panel.add(lblBorrowFormNo);
 		
-		ISBNtextField = new JTextField();
-		ISBNtextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		ISBNtextField.setColumns(10);
-		ISBNtextField.setBounds(164, 144, 200, 20);
-		panel.add(ISBNtextField);
-		
 		JLabel lblReturnDate = new JLabel("Return Date :");
 		lblReturnDate.setForeground(new Color(153, 102, 0));
 		lblReturnDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblReturnDate.setBounds(40, 188, 84, 16);
+		lblReturnDate.setBounds(40, 192, 84, 16);
 		panel.add(lblReturnDate);
 		
 		JDateChooser ReturnDate = new JDateChooser();
-		ReturnDate.setBounds(164, 188, 200, 20);
+		ReturnDate.setBounds(164, 192, 200, 20);
 		panel.add(ReturnDate);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBackground(Color.WHITE);
+		comboBox.setBounds(164, 145, 200, 22);
+		panel.add(comboBox);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(255, 204, 153));
@@ -121,6 +123,9 @@ public class ReturnBookDialog extends JDialog {
 				cancelButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						setVisible(false);
+						LibrarianPortalFrame frame = new LibrarianPortalFrame();
+						frame.setVisible(true);
 						dispose();
 					}
 				});
