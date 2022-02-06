@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
+
 import connection.DbConnection;
 import values.BorrowForm;
 
@@ -26,7 +28,7 @@ public class BorrowFormCRUD {
 	}
 	
 	public static  String setValues() {
-		String strfields = "VALUES(?,"+
+		String strfields = "VALUES(null,"+
 								"?,"  + 
 								"?,"  +
 								"?,"  +
@@ -43,16 +45,14 @@ public class BorrowFormCRUD {
 			
 			objPreparedStatementObject = conn.prepareStatement("INSERT INTO borrowform_table " + setFields()
 					+ setValues());
-			/*objPreparedStatementObject.setString(1, account.getAccountName());
-			objPreparedStatementObject.setString(2, account.getAddress());
-			objPreparedStatementObject.setString(3, account.getCity());
-			objPreparedStatementObject.setString(4, account.getProvince());
-			objPreparedStatementObject.setString(5, account.getCountry());
-			objPreparedStatementObject.setString(6, account.getRole());
-			objPreparedStatementObject.setString(7, account.getContactNum());
-			objPreparedStatementObject.setString(8, account.getEmail());
+			objPreparedStatementObject.setString(1, borrowform.getAccountID());
+			objPreparedStatementObject.setString(2, borrowform.getISBN());
+			objPreparedStatementObject.setString(3, borrowform.getStatus());
+			objPreparedStatementObject.setDate(4, borrowform.getIssueDate());
+			objPreparedStatementObject.setDate(5, borrowform.getDueDate());
+			
 			intResult = objPreparedStatementObject.executeUpdate();
-			*/
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,4 +90,36 @@ public class BorrowFormCRUD {
 		}  
 	return borrowForm;
 	}
+	
+//Retrieve ISBN and Add to Combobox
+	public static void ISBNComboBox(JComboBox combobox) {
+		conn =   DbConnection.getConnection();
+		try{
+			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM book_table");  
+			ojbResultSetObject = objPreparedStatementObject.executeQuery();
+			while(ojbResultSetObject.next()) {
+				String ISBN = ojbResultSetObject.getString("ISBN");
+				combobox.addItem(ISBN);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//Retrieve Account and Add to Combobox
+		public static void AccountIDComboBox(JComboBox combobox) {
+			conn =   DbConnection.getConnection();
+			try{
+				objPreparedStatementObject = conn.prepareStatement("SELECT * FROM account_table");  
+				ojbResultSetObject = objPreparedStatementObject.executeQuery();
+				while(ojbResultSetObject.next()) {
+					String AccountID = ojbResultSetObject.getString("AccountID");
+					combobox.addItem(AccountID);
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 }

@@ -182,6 +182,9 @@ public class AddAccount extends JDialog {
 				cancelButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						setVisible(false);
+						LibrarianPortalFrame frame = new LibrarianPortalFrame();
+						frame.setVisible(true);
 						dispose();
 					}
 				});

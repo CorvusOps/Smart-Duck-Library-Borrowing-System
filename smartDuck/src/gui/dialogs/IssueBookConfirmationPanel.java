@@ -5,11 +5,28 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.TextField;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 
-public class IssueBookConfirmationPanel extends JPanel {
+import connection.DbConnection;
 
+public class IssueBookConfirmationPanel extends JPanel {
+	
+	static Connection conn = null;
+	static PreparedStatement objPreparedStatementObject = null;
+	static ResultSet ojbResultSetObject = null;
+	
+	private TextField ISBNBookDetail;
+	private TextField TitleBookDetail;
+	private TextField AuthorBookDetail;
+	private TextField IDAccountDetail;
+	private TextField NameAccountDetail;
+	private TextField CourseAccountDetail;
+	private TextField DepartmentAccountDetail;
 	/**
 	 * Create the panel.
 	 */
@@ -30,8 +47,7 @@ public class IssueBookConfirmationPanel extends JPanel {
 		lblIsbnBookDetails.setBounds(25, 165, 48, 16);
 		add(lblIsbnBookDetails);
 		
-		TextField ISBNBookDetail = new TextField();
-		ISBNBookDetail.setEnabled(false);
+		ISBNBookDetail = new TextField();
 		ISBNBookDetail.setEditable(false);
 		ISBNBookDetail.setBounds(131, 165, 231, 22);
 		add(ISBNBookDetail);
@@ -42,8 +58,7 @@ public class IssueBookConfirmationPanel extends JPanel {
 		lblTitle.setBounds(25, 211, 48, 16);
 		add(lblTitle);
 		
-		TextField TitleBookDetail = new TextField();
-		TitleBookDetail.setEnabled(false);
+		TitleBookDetail = new TextField();
 		TitleBookDetail.setEditable(false);
 		TitleBookDetail.setBounds(131, 211, 231, 22);
 		add(TitleBookDetail);
@@ -54,7 +69,7 @@ public class IssueBookConfirmationPanel extends JPanel {
 		lblAuthor.setBounds(25, 254, 72, 16);
 		add(lblAuthor);
 		
-		TextField AuthorBookDetail = new TextField();
+		AuthorBookDetail = new TextField();
 		AuthorBookDetail.setEditable(false);
 		AuthorBookDetail.setBounds(131, 254, 231, 22);
 		add(AuthorBookDetail);
@@ -66,22 +81,22 @@ public class IssueBookConfirmationPanel extends JPanel {
 		lblAccountDetails.setBounds(25, 305, 188, 50);
 		add(lblAccountDetails);
 		
-		TextField IDAccountDetail = new TextField();
+		IDAccountDetail = new TextField();
 		IDAccountDetail.setEditable(false);
 		IDAccountDetail.setBounds(131, 366, 231, 22);
 		add(IDAccountDetail);
 		
-		TextField NameAccountDetail = new TextField();
+		NameAccountDetail = new TextField();
 		NameAccountDetail.setEditable(false);
 		NameAccountDetail.setBounds(131, 406, 231, 22);
 		add(NameAccountDetail);
 		
-		TextField CourseAccountDetail = new TextField();
+		CourseAccountDetail = new TextField();
 		CourseAccountDetail.setEditable(false);
 		CourseAccountDetail.setBounds(131, 449, 231, 22);
 		add(CourseAccountDetail);
 		
-		TextField DepartmentAccountDetail = new TextField();
+		DepartmentAccountDetail = new TextField();
 		DepartmentAccountDetail.setEditable(false);
 		DepartmentAccountDetail.setBounds(129, 493, 231, 22);
 		add(DepartmentAccountDetail);
@@ -123,5 +138,30 @@ public class IssueBookConfirmationPanel extends JPanel {
 		separator.setBounds(105, 58, 213, 2);
 		add(separator);
 
+	}
+	
+	public void setTexts(String ISBN, String AccID) {
+		conn =   DbConnection.getConnection();
+		try{
+			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM book_table WHERE ISBN = '" + ISBN +"'");  
+			ojbResultSetObject = objPreparedStatementObject.executeQuery();
+			if(ojbResultSetObject.next()) {
+				ISBNBookDetail.setText(ojbResultSetObject.getString("ISBN"));
+				TitleBookDetail.setText(ojbResultSetObject.getString("Title"));
+				AuthorBookDetail.setText(ojbResultSetObject.getString("Author"));
+				}
+			
+			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM account_table WHERE AccountID = '" + AccID +"'");  
+			ojbResultSetObject = objPreparedStatementObject.executeQuery();
+			if(ojbResultSetObject.next()) {
+				IDAccountDetail.setText(ojbResultSetObject.getString("AccountID"));
+				NameAccountDetail.setText(ojbResultSetObject.getString("Name"));
+				CourseAccountDetail.setText(ojbResultSetObject.getString("Course"));
+				DepartmentAccountDetail.setText(ojbResultSetObject.getString("Department"));
+				}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

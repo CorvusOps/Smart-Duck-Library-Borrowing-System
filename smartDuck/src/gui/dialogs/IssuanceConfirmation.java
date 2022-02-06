@@ -17,6 +17,9 @@ import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import gui.LibrarianPortalFrame;
+
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
@@ -25,13 +28,13 @@ import java.awt.event.MouseEvent;
 public class IssuanceConfirmation extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
+	static String ISBN, AccID;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			IssuanceConfirmation dialog = new IssuanceConfirmation();
+			IssuanceConfirmation dialog = new IssuanceConfirmation(ISBN, AccID);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -42,7 +45,7 @@ public class IssuanceConfirmation extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public IssuanceConfirmation() {
+	public IssuanceConfirmation(String ISBN, String AccID) {
 		setBounds(100, 100, 439, 513);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 204, 153));
@@ -64,6 +67,7 @@ public class IssuanceConfirmation extends JDialog {
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			{
 				IssueBookConfirmationPanel panel = new IssueBookConfirmationPanel();
+				panel.setTexts(ISBN, AccID);
 				panel.setPreferredSize(new Dimension(370, 600));
 				scrollPane.setViewportView(panel);
 			}
@@ -84,6 +88,9 @@ public class IssuanceConfirmation extends JDialog {
 				cancelButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						setVisible(false);
+						LibrarianPortalFrame frame = new LibrarianPortalFrame();
+						frame.setVisible(true);
 						dispose();
 					}
 				});
