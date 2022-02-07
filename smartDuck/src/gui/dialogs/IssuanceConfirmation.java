@@ -1,29 +1,22 @@
 package gui.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import com.toedter.calendar.JDateChooser;
+import javax.swing.border.EmptyBorder;
 
 import gui.LibrarianPortalFrame;
-
-import javax.swing.ImageIcon;
-import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class IssuanceConfirmation extends JDialog {
 
@@ -88,9 +81,6 @@ public class IssuanceConfirmation extends JDialog {
 				cancelButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						setVisible(false);
-						LibrarianPortalFrame frame = new LibrarianPortalFrame();
-						frame.setVisible(true);
 						dispose();
 					}
 				});
