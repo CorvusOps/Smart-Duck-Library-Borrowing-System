@@ -8,8 +8,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,9 +22,7 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 
 import CRUD.BorrowFormCRUD;
-import Execution.AccountEXE;
 import Execution.BorrowFormEXE;
-import gui.LibrarianPortalFrame;
 import values.BorrowForm;
 
 public class IssueBook extends JDialog {
@@ -189,8 +185,6 @@ public class IssueBook extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						dispose();
-						LibrarianPortalFrame frame = new LibrarianPortalFrame();
-						frame.setVisible(true);
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

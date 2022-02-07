@@ -155,8 +155,6 @@ public class AddBookDialog extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						setVisible(false);
-						LibrarianPortalFrame frame = new LibrarianPortalFrame();
-						frame.setVisible(true);
 						dispose();
 					}
 				});
