@@ -1,8 +1,6 @@
 package gui.dialogs;
 
-import javax.swing.JPanel;
 import java.awt.Color;
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.TextField;
 import java.sql.Connection;
@@ -10,9 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-import connection.DbConnection;
+import CRUD.BorrowFormCRUD;
+import values.Account;
+import values.Book;
 
 public class IssueBookConfirmationPanel extends JPanel {
 	
@@ -141,27 +143,18 @@ public class IssueBookConfirmationPanel extends JPanel {
 	}
 	
 	public void setTexts(String ISBN, String AccID) {
-		conn =   DbConnection.getConnection();
-		try{
-			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM book_table WHERE ISBN = '" + ISBN +"'");  
-			ojbResultSetObject = objPreparedStatementObject.executeQuery();
-			if(ojbResultSetObject.next()) {
-				ISBNBookDetail.setText(ojbResultSetObject.getString("ISBN"));
-				TitleBookDetail.setText(ojbResultSetObject.getString("Title"));
-				AuthorBookDetail.setText(ojbResultSetObject.getString("Author"));
-				}
-			
-			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM account_table WHERE AccountID = '" + AccID +"'");  
-			ojbResultSetObject = objPreparedStatementObject.executeQuery();
-			if(ojbResultSetObject.next()) {
-				IDAccountDetail.setText(ojbResultSetObject.getString("AccountID"));
-				NameAccountDetail.setText(ojbResultSetObject.getString("Name"));
-				CourseAccountDetail.setText(ojbResultSetObject.getString("Course"));
-				DepartmentAccountDetail.setText(ojbResultSetObject.getString("Department"));
-				}
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+	//set the texts to the JTextFields of the details of the Book and the Borrower
+		
+		Book bookValues = BorrowFormCRUD.getBookDetails(ISBN);
+		Account accountValues = BorrowFormCRUD.getAccountDetails(AccID);
+		
+		ISBNBookDetail.setText(bookValues.getISBN());
+		TitleBookDetail.setText(bookValues.getTitle());
+		AuthorBookDetail.setText(bookValues.getAuthor());
+		IDAccountDetail.setText(accountValues.getAccountId());
+		NameAccountDetail.setText(accountValues.getName());
+		CourseAccountDetail.setText(accountValues.getCourse());
+		DepartmentAccountDetail.setText(accountValues.getDepartment());
+		
 	}
 }

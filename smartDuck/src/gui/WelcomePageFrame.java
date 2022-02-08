@@ -15,8 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import gui.MainMenu;
-
 @SuppressWarnings("serial")
 public class WelcomePageFrame extends JFrame {
 

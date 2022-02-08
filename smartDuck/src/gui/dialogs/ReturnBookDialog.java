@@ -14,11 +14,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
+
+import CRUD.ReturnFormCRUD;
 
 public class ReturnBookDialog extends JDialog {
 
@@ -91,10 +94,11 @@ public class ReturnBookDialog extends JDialog {
 		ReturnDate.setBounds(164, 192, 200, 20);
 		panel.add(ReturnDate);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBackground(Color.WHITE);
-		comboBox.setBounds(164, 145, 200, 22);
-		panel.add(comboBox);
+		JComboBox ReturnComboBox = new JComboBox();
+		ReturnComboBox.setBackground(Color.WHITE);
+		ReturnComboBox.setBounds(164, 145, 200, 22);
+		panel.add(ReturnComboBox);
+		ReturnFormCRUD.ReturnComboBox(ReturnComboBox);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(255, 204, 153));
@@ -105,9 +109,28 @@ public class ReturnBookDialog extends JDialog {
 				ReturnButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						setVisible(false);
-						ReturnBookDetailsDialog viewDetails = new ReturnBookDetailsDialog();
-						viewDetails.setVisible(true);
+						
+						String borrowID = (String)ReturnComboBox.getSelectedItem();
+						java.sql.Date dateReturned = new java.sql.Date(ReturnDate.getDate().getTime());	
+						//fields that needs to be filled out
+						
+							boolean isFilled = !ReturnComboBox.equals("") && !ReturnComboBox.equals("Select")
+												&& !dateReturned.equals("");
+							try {
+								if(isFilled) {
+								
+						//redirect to the confirmation dialog
+									setVisible(false);
+									ReturnBookDetailsDialog viewDetails = new ReturnBookDetailsDialog(borrowID, dateReturned); //passed value to details dialog
+									viewDetails.setVisible(true);
+									
+								} else {
+									JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
+									}
+								} catch (Exception e1) {
+								e1.printStackTrace();
+							}			
+						
 					}
 				});
 				ReturnButton.setActionCommand("OK");

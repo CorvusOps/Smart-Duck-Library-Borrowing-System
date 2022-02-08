@@ -6,13 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
+
 import connection.DbConnection;
+import values.Account;
+import values.Book;
+import values.BorrowForm;
 import values.ReturnForm;
 
 public class ReturnFormCRUD {
 	static Connection conn = null;
 	static PreparedStatement objPreparedStatementObject = null;
-	static ResultSet ojbResultSetObject = null;
+	static ResultSet objResultSetObject = null;
 	
 	public static String setFields() {
 		String strfields = 
@@ -23,7 +28,7 @@ public class ReturnFormCRUD {
 	}
 	
 	public static  String setValues() {
-		String strfields = "VALUES(?,"+
+		String strfields = "VALUES(null,"+
 								"?,"  + 
 								"?)";
 		return strfields;
@@ -37,16 +42,11 @@ public class ReturnFormCRUD {
 			
 			objPreparedStatementObject = conn.prepareStatement("INSERT INTO returnform_table " + setFields()
 					+ setValues());
-			/*objPreparedStatementObject.setString(1, account.getAccountName());
-			objPreparedStatementObject.setString(2, account.getAddress());
-			objPreparedStatementObject.setString(3, account.getCity());
-			objPreparedStatementObject.setString(4, account.getProvince());
-			objPreparedStatementObject.setString(5, account.getCountry());
-			objPreparedStatementObject.setString(6, account.getRole());
-			objPreparedStatementObject.setString(7, account.getContactNum());
-			objPreparedStatementObject.setString(8, account.getEmail());
+			objPreparedStatementObject.setInt(1, returnform.getBorrowFormID());
+			objPreparedStatementObject.setDate(2, returnform.getReturnDate());
+			
 			intResult = objPreparedStatementObject.executeUpdate();
-			*/
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,33 +55,119 @@ public class ReturnFormCRUD {
 		return intResult;
 	}
 	
+	
+	
 	public static ArrayList<ReturnForm> ReadReturnForm() {
 		ArrayList<ReturnForm> returnForm = new ArrayList<ReturnForm>();
 		try {
 			conn =   DbConnection.getConnection();
 			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM returnform_table");  
-			ojbResultSetObject = objPreparedStatementObject.executeQuery();
+			objResultSetObject = objPreparedStatementObject.executeQuery();
 		
-			while(ojbResultSetObject.next()) {
-				/*Account accounts = new Account();
-				accounts.setAccountID(ojbResultSetObject.getInt("AccountID"));
-				accounts.setAccountName(ojbResultSetObject.getString("AccountName"));
-				accounts.setAddress(ojbResultSetObject.getString("Address"));
-				accounts.setCity(ojbResultSetObject.getString("City"));
-				accounts.setProvince(ojbResultSetObject.getString("Province"));
-				accounts.setCountry(ojbResultSetObject.getString("Country"));
-				accounts.setRole(ojbResultSetObject.getString("Role"));
-				accounts.setContactNum(ojbResultSetObject.getString("ContactNum"));
-				accounts.setEmail(ojbResultSetObject.getString("Email"));
-
+			while(objResultSetObject.next()) {
+				ReturnForm returnform = new ReturnForm();
 				
-				account.add(accounts);
-				*/
+				returnform.setReturnFormNo(objResultSetObject.getInt("ReturnFormNo"));
+				returnform.setBorrowFormID(objResultSetObject.getInt("BorrowFormID"));
+				returnform.setReturnDate(objResultSetObject.getDate("ReturnDate"));
+				
+				
+				returnForm.add(returnform);
+				
 			}
 		}catch(Exception e){
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		}  
+		
+		
+		
 	return returnForm;
 	}
+	
+	public static void ReturnComboBox(JComboBox combobox) {
+		conn =   DbConnection.getConnection();
+		try{
+			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM borrowform_table");  
+			objResultSetObject = objPreparedStatementObject.executeQuery();
+			while(objResultSetObject.next()) {
+				String borrowformID = objResultSetObject.getString("borrowformID");
+				combobox.addItem(borrowformID);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static Book getBookDetails(String ISBN) {
+		Book bookValues = new Book();
+		conn =   DbConnection.getConnection();
+		try{
+			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM book_table WHERE ISBN = '" + ISBN +"'");  
+			objResultSetObject = objPreparedStatementObject.executeQuery();
+			if(objResultSetObject.next()) {
+				bookValues.setISBN(objResultSetObject.getString("ISBN"));
+				bookValues.setTitle(objResultSetObject.getString("Title"));
+				bookValues.setAuthor(objResultSetObject.getString("Author"));
+				}	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return bookValues;
+	}
+	//Retrieve values of an account using its AccountID
+		public static Account getAccountDetails(String AccountID) {
+			Account accountValues = new Account();
+			conn =   DbConnection.getConnection();
+			try{
+				objPreparedStatementObject = conn.prepareStatement("SELECT * FROM account_table WHERE AccountID = '" + AccountID +"'");  
+				objResultSetObject = objPreparedStatementObject.executeQuery();
+				if(objResultSetObject.next()) {
+					accountValues.setAccountId(objResultSetObject.getString("AccountID"));
+					accountValues.setName(objResultSetObject.getString("Name"));
+					accountValues.setCourse(objResultSetObject.getString("Course"));
+					accountValues.setDepartment(objResultSetObject.getString("Department"));
+					}	
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return accountValues;
+		}
+		public static BorrowForm getBorrowDetails(int borrowID) {
+			BorrowForm borrowValues = new BorrowForm();
+			conn = DbConnection.getConnection();
+			
+			try {
+				objPreparedStatementObject = conn.prepareStatement("SELECT * FROM borrowform_table WHERE borrowformID = '" + borrowID +"'");  
+				objResultSetObject = objPreparedStatementObject.executeQuery();
+				if(objResultSetObject.next()) {
+					borrowValues.setBorrowFormID(objResultSetObject.getInt("borrowformID"));
+					borrowValues.setAccountID(objResultSetObject.getString("AccountID"));
+					borrowValues.setISBN(objResultSetObject.getString("ISBN"));
+					borrowValues.setIssueDate(objResultSetObject.getDate("IssueDate"));
+					borrowValues.setDueDate(objResultSetObject.getDate("DueDate"));
+					borrowValues.setStatus(objResultSetObject.getString("Status"));
+					}	
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			return borrowValues;
+		}
+		
+		public static void setStatusReturned(int BorrowID) {
+			conn = DbConnection.getConnection();
+			
+			try {
+				System.out.println("Updating borrow form table");
+				objPreparedStatementObject = conn.prepareStatement("UPDATE borrowform_table SET status = 'Returned' WHERE borrowformID = '" + BorrowID +"'");
+				objPreparedStatementObject.executeUpdate();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
 }
