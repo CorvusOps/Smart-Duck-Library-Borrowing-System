@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 
 import connection.DbConnection;
+import values.Account;
+import values.Book;
 import values.BorrowForm;
 
 public class BorrowFormCRUD {
@@ -69,20 +71,17 @@ public class BorrowFormCRUD {
 			ojbResultSetObject = objPreparedStatementObject.executeQuery();
 		
 			while(ojbResultSetObject.next()) {
-				/*Account accounts = new Account();
-				accounts.setAccountID(ojbResultSetObject.getInt("AccountID"));
-				accounts.setAccountName(ojbResultSetObject.getString("AccountName"));
-				accounts.setAddress(ojbResultSetObject.getString("Address"));
-				accounts.setCity(ojbResultSetObject.getString("City"));
-				accounts.setProvince(ojbResultSetObject.getString("Province"));
-				accounts.setCountry(ojbResultSetObject.getString("Country"));
-				accounts.setRole(ojbResultSetObject.getString("Role"));
-				accounts.setContactNum(ojbResultSetObject.getString("ContactNum"));
-				accounts.setEmail(ojbResultSetObject.getString("Email"));
-
+				BorrowForm borrowValues = new BorrowForm();
+				  
+				borrowValues.setBorrowFormID(ojbResultSetObject.getInt("borrowFormID"));
+				borrowValues.setAccountID(ojbResultSetObject.getString("AccountID"));
+				borrowValues.setISBN(ojbResultSetObject.getString("ISBN"));
+				borrowValues.setStatus(ojbResultSetObject.getString("Status"));
+				borrowValues.setIssueDate(ojbResultSetObject.getDate("IssueDate"));
+				borrowValues.setDueDate(ojbResultSetObject.getDate("DueDate"));
 				
-				account.add(accounts);
-				*/
+				borrowForm.add(borrowValues);
+				
 			}
 		}catch(Exception e){
 		// TODO Auto-generated catch block
@@ -108,18 +107,54 @@ public class BorrowFormCRUD {
 	}
 	
 	//Retrieve Account and Add to Combobox
-		public static void AccountIDComboBox(JComboBox combobox) {
+	public static void AccountIDComboBox(JComboBox combobox) {
+		conn =   DbConnection.getConnection();
+		try{
+			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM account_table");  
+			ojbResultSetObject = objPreparedStatementObject.executeQuery();
+			while(ojbResultSetObject.next()) {
+				String AccountID = ojbResultSetObject.getString("AccountID");
+				combobox.addItem(AccountID);
+			}	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//Retrieve values of a book using its ISBN
+	public static Book getBookDetails(String ISBN) {
+		Book bookValues = new Book();
+		conn =   DbConnection.getConnection();
+		try{
+			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM book_table WHERE ISBN = '" + ISBN +"'");  
+			ojbResultSetObject = objPreparedStatementObject.executeQuery();
+			if(ojbResultSetObject.next()) {
+				bookValues.setISBN(ojbResultSetObject.getString("ISBN"));
+				bookValues.setTitle(ojbResultSetObject.getString("Title"));
+				bookValues.setAuthor(ojbResultSetObject.getString("Author"));
+				}	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return bookValues;
+	}
+	//Retrieve values of an account using its AccountID
+		public static Account getAccountDetails(String AccountID) {
+			Account accountValues = new Account();
 			conn =   DbConnection.getConnection();
 			try{
-				objPreparedStatementObject = conn.prepareStatement("SELECT * FROM account_table");  
+				objPreparedStatementObject = conn.prepareStatement("SELECT * FROM account_table WHERE AccountID = '" + AccountID +"'");  
 				ojbResultSetObject = objPreparedStatementObject.executeQuery();
-				while(ojbResultSetObject.next()) {
-					String AccountID = ojbResultSetObject.getString("AccountID");
-					combobox.addItem(AccountID);
-				}
-				
+				if(ojbResultSetObject.next()) {
+					accountValues.setAccountId(ojbResultSetObject.getString("AccountID"));
+					accountValues.setName(ojbResultSetObject.getString("Name"));
+					accountValues.setCourse(ojbResultSetObject.getString("Course"));
+					accountValues.setDepartment(ojbResultSetObject.getString("Department"));
+					}	
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+			return accountValues;
 		}
+		
+		
 }

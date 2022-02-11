@@ -1,5 +1,8 @@
 package gui.dialogs;
-
+/*
+ * This Jdialog is for viewing of details of a book that is being issued, 
+ * If confirmed, it will be saved in the database
+ */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,26 +11,30 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import gui.LibrarianPortalFrame;
+import Execution.BorrowFormEXE;
+import values.BorrowForm;
 
 public class IssuanceConfirmation extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	static String ISBN, AccID;
+	static String ISBN, AccID, Status;
+	static Date issueDate, dueDate;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			IssuanceConfirmation dialog = new IssuanceConfirmation(ISBN, AccID);
+			IssuanceConfirmation dialog = new IssuanceConfirmation(ISBN, AccID, Status, issueDate, dueDate);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -38,7 +45,7 @@ public class IssuanceConfirmation extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public IssuanceConfirmation(String ISBN, String AccID) {
+	public IssuanceConfirmation(String ISBN, String AccID, String status, Date issuedate, Date dueDate) {
 		setBounds(100, 100, 439, 513);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 204, 153));
@@ -72,6 +79,22 @@ public class IssuanceConfirmation extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton ConfirmButton = new JButton("Confirm");
+				ConfirmButton.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+				//set the values in the database
+						BorrowForm borrowFormValues = new BorrowForm();
+						BorrowFormEXE.setValues(borrowFormValues, AccID,
+								ISBN,
+								"Issued",
+								issuedate,
+								dueDate);
+		
+						JOptionPane.showMessageDialog(null, BorrowFormEXE.exeInsertStatements(borrowFormValues));
+						
+						setVisible(false);
+					}
+				});
 				ConfirmButton.setActionCommand("OK");
 				buttonPane.add(ConfirmButton);
 				getRootPane().setDefaultButton(ConfirmButton);

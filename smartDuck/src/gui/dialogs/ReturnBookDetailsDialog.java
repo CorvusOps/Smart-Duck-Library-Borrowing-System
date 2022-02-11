@@ -6,29 +6,46 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JSeparator;
-import java.awt.TextField;
+import javax.swing.border.EmptyBorder;
+
+import CRUD.ReturnFormCRUD;
+import Execution.ReturnFormEXE;
+import values.Account;
+import values.Book;
+import values.BorrowForm;
+import values.ReturnForm;
 
 public class ReturnBookDetailsDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
+	private TextField ISBNBookDetail;
+	private TextField TitleBookDetail;
+	private TextField IDAccountDetail;
+	private TextField NameAccountDetail;
+	private TextField BorrowFormNo;
+	
+	
+	static String borrowID;
+	static Date returnDate;
+	static java.sql.Connection conn = null;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			ReturnBookDetailsDialog dialog = new ReturnBookDetailsDialog();
+			ReturnBookDetailsDialog dialog = new ReturnBookDetailsDialog(borrowID, returnDate);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -39,7 +56,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ReturnBookDetailsDialog() {
+	public ReturnBookDetailsDialog(String borrowID, Date returnDate) {
 		setBounds(100, 100, 450, 500);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 204, 153));
@@ -63,6 +80,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 		
 		JLabel lblReturnFormDetails = new JLabel("RETURN FORM DETAILS");
 		lblReturnFormDetails.setIcon(new ImageIcon(ReturnBookDetailsDialog.class.getResource("/img/returnBookDialog_50px.png")));
+		
 		lblReturnFormDetails.setForeground(new Color(102, 0, 0));
 		lblReturnFormDetails.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblReturnFormDetails.setBounds(64, 22, 273, 56);
@@ -74,7 +92,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 		separator.setBounds(124, 69, 213, 2);
 		panel.add(separator);
 		
-		TextField ISBNBookDetail = new TextField();
+		ISBNBookDetail = new TextField();
 		ISBNBookDetail.setEnabled(false);
 		ISBNBookDetail.setEditable(false);
 		ISBNBookDetail.setBounds(140, 162, 231, 22);
@@ -92,7 +110,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 		lblTitle.setBounds(45, 210, 48, 16);
 		panel.add(lblTitle);
 		
-		TextField TitleBookDetail = new TextField();
+		TitleBookDetail = new TextField();
 		TitleBookDetail.setEnabled(false);
 		TitleBookDetail.setEditable(false);
 		TitleBookDetail.setBounds(140, 210, 231, 22);
@@ -104,7 +122,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 		lblId.setBounds(45, 256, 23, 17);
 		panel.add(lblId);
 		
-		TextField IDAccountDetail = new TextField();
+		IDAccountDetail = new TextField();
 		IDAccountDetail.setEditable(false);
 		IDAccountDetail.setBounds(140, 256, 231, 22);
 		panel.add(IDAccountDetail);
@@ -115,7 +133,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 		lblName.setBounds(45, 304, 52, 17);
 		panel.add(lblName);
 		
-		TextField NameAccountDetail = new TextField();
+		NameAccountDetail = new TextField();
 		NameAccountDetail.setEditable(false);
 		NameAccountDetail.setBounds(140, 304, 231, 22);
 		panel.add(NameAccountDetail);
@@ -126,22 +144,37 @@ public class ReturnBookDetailsDialog extends JDialog {
 		lblBorrowFormNo.setBounds(45, 116, 119, 16);
 		panel.add(lblBorrowFormNo);
 		
-		TextField ISBNBookDetail_1 = new TextField();
-		ISBNBookDetail_1.setEnabled(false);
-		ISBNBookDetail_1.setEditable(false);
-		ISBNBookDetail_1.setBounds(170, 116, 201, 22);
-		panel.add(ISBNBookDetail_1);
+		BorrowFormNo = new TextField();
+		BorrowFormNo.setEnabled(false);
+		BorrowFormNo.setEditable(false);
+		BorrowFormNo.setBounds(170, 116, 201, 22);
+		panel.add(BorrowFormNo);
+		
+		int intBorrowID = Integer.parseInt(borrowID);
+		setTexts(intBorrowID);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(255, 204, 153));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
+				
 				JButton ReturnBookButton = new JButton("Return Book");
 				ReturnBookButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+			
+						//set status from borrowform_table to "returned"
 						
+						ReturnFormCRUD.setStatusReturned(intBorrowID);
+						
+						//System.out.println("Inserting values values in return form");
+						//insert data to returnform_table in the database
+						
+						ReturnForm returnFormValues = new ReturnForm();
+						ReturnFormEXE.setValues(returnFormValues, intBorrowID, returnDate);
+						
+						JOptionPane.showMessageDialog(null, ReturnFormEXE.exeInsertStatements(returnFormValues));
 					}
 				});
 				ReturnBookButton.setActionCommand("OK");
@@ -160,5 +193,27 @@ public class ReturnBookDetailsDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+	
 	}
+	public void setTexts(int BorrowID) {
+		//set the texts to the JTextFields of the details of the Book and the Borrower
+
+		
+			BorrowForm borrowValues = ReturnFormCRUD.getBorrowDetails(BorrowID);
+			String ISBN = borrowValues.getISBN();
+			String AccID = borrowValues.getAccountID()
+					;
+			Book bookValues = ReturnFormCRUD.getBookDetails(ISBN);
+			Account accountValues = ReturnFormCRUD.getAccountDetails(AccID);
+			
+			BorrowFormNo.setText(Integer.toString(borrowValues.getBorrowFormID()));
+			ISBNBookDetail.setText(bookValues.getISBN());
+			TitleBookDetail.setText(bookValues.getTitle());
+			IDAccountDetail.setText(accountValues.getAccountId());
+			NameAccountDetail.setText(accountValues.getName());
+		
+		}
+	
+	
 }

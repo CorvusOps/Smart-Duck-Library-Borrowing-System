@@ -1,5 +1,8 @@
 package gui.dialogs;
-
+/*
+ * This Jdialog is for filling out details ONLY.
+ * The confirmation for the issuance will redirect to IssuanceConfirmation.java
+ */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -22,7 +25,6 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 
 import CRUD.BorrowFormCRUD;
-import Execution.BorrowFormEXE;
 import values.BorrowForm;
 
 public class IssueBook extends JDialog {
@@ -142,25 +144,16 @@ public class IssueBook extends JDialog {
 						String ISBN = (String) ISBNcomboBox.getSelectedItem();
 						String AccountID = (String) AccountIDcomboBox.getSelectedItem();
 						//fields that needs to be filled out
+						
 							boolean isFilled = !ISBN.equals("") && !ISBN.equals("Select")
 												&& !AccountID.equals("") && !AccountID.equals("Select");
 							try {
 								if(isFilled) {
-									
 									java.sql.Date issuedate = new java.sql.Date(IssueDate.getDate().getTime());
 									java.sql.Date duedate = new java.sql.Date(DueDate.getDate().getTime());
-									
-								//setting the values
-									BorrowFormEXE.setValues(borrowFormValues, AccountID,
-															ISBN,
-															"Issued",
-															issuedate,
-															duedate);
-									
-									JOptionPane.showMessageDialog(null, BorrowFormEXE.exeInsertStatements(borrowFormValues));
-									
+						//redirect to the confirmation dialog
 									setVisible(false);
-									IssuanceConfirmation confirmation = new IssuanceConfirmation(ISBN, AccountID);
+									IssuanceConfirmation confirmation = new IssuanceConfirmation(ISBN, AccountID, "Issued", issuedate, duedate);
 									confirmation.setVisible(true);
 									
 								} else {
@@ -168,11 +161,7 @@ public class IssueBook extends JDialog {
 									}
 								} catch (Exception e1) {
 								e1.printStackTrace();
-							}
-							/*setVisible(false);
-							LibrarianPortalFrame frame = new LibrarianPortalFrame();
-							frame.setVisible(true);*/
-						
+							}					
 					}
 				});
 				IssueButton.setActionCommand("OK");
