@@ -8,13 +8,19 @@ import java.awt.Font;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import CRUD.AccountCRUD;
 import Execution.AccountEXE;
+import gui.dialogs.EditAccountDialog;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UsersPanel extends JPanel {
 	
@@ -56,29 +62,8 @@ public class UsersPanel extends JPanel {
 		jpnlHeader.add(jpnlButtons);
 		
 		JButton jbtnUpdate = new JButton("Update");
+		
 		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		/*jbtnUpdate.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int rowIndex = jtblStudents.getSelectedRow();
-				
-				if(rowIndex == -1) {
-					JOptionPane.showMessageDialog(
-							null,
-							"Please select a student first before updating.",
-							"Warning",
-							JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				String studentNumber = (String) studentTableModel.getValueAt(rowIndex, 0);
-				Student student = studentRepository.getByStudentNumber(studentNumber);
-				
-				updateStudentDialog.initializeDialog(student);
-				updateStudentDialog.setVisible(true);
-			}
-		});
-		*/
 		jpnlButtons.add(jbtnUpdate);
 		
 		JButton jbtnDelete = new JButton("Delete");
@@ -115,14 +100,60 @@ public class UsersPanel extends JPanel {
 		jtblAccounts.setRowHeight(25);
 		jtblAccounts.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		
-		
 		String[] arrColumnNames = {"Account ID", "Name", "Course", "Department", "Email"};
 		DefaultTableModel objtableModel = new DefaultTableModel(arrColumnNames, 0);
 		AccountEXE.ReadAccountTable(objtableModel);
 		jtblAccounts.setModel(objtableModel);
 				
 		scrollPane.setViewportView(jtblAccounts);
-
+		
+	//Update Action Listener
+		jbtnUpdate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+					int rowIndex = jtblAccounts.getSelectedRow();
+					
+					if(rowIndex == -1) {
+						JOptionPane.showMessageDialog(
+								null,
+								"Please select a student first before updating.",
+								"Warning",
+								JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					
+					String AccountID = (String) objtableModel.getValueAt(rowIndex, 0);
+					
+					EditAccountDialog editAccDialog = new EditAccountDialog(AccountID);
+					editAccDialog.setVisible(true);
+				}
+		});
+	//Delete Action Listener	
+		jbtnDelete.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+					int rowIndex = jtblAccounts.getSelectedRow();
+					
+					if(rowIndex == -1) {
+						JOptionPane.showMessageDialog(
+								null,
+								"Please select a student first before deleting.",
+								"Warning",
+								JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					
+					if(JOptionPane.showConfirmDialog(null, "Are you sure?") == JOptionPane.YES_OPTION) {
+						String AccountID = (String) objtableModel.getValueAt(rowIndex, 0);
+						 
+						AccountCRUD.DeleteAccount(AccountID);
+					//refresh the table
+						//objtableModel.setRowCount(1);
+						//AccountEXE.ReadAccountTable(objtableModel);
+					}
+			}
+		});
+		
 	}
 
 }
