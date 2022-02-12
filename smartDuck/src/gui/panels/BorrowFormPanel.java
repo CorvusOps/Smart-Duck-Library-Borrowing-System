@@ -10,9 +10,18 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import CRUD.BorrowFormCRUD;
+import Execution.BorrowFormEXE;
 
 public class BorrowFormPanel extends JPanel {
+	
+	private JTable jtblBorrowerForm;
+	
+	protected BorrowFormCRUD borrowFormCRUD;
 
 	/**
 	 * Create the panel.
@@ -105,23 +114,18 @@ public class BorrowFormPanel extends JPanel {
 		scrollPane.setAlignmentX(0.0f);
 		add(scrollPane);
 		
-		//jtblAccounts = new JTable();
-		//jtblAccounts.setRowHeight(25);
-		//jtblAccounts.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		jtblBorrowerForm = new JTable();
+		jtblBorrowerForm.setRowHeight(25);
+		jtblBorrowerForm.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		
 		
-		//String[] arrColumnNames = {"Account ID", "Account Name", "Address", "City", "Province", "Country", "Role", "Contact Number", "Email"};
-		//DefaultTableModel objtableModel = new DefaultTableModel(arrColumnNames, 0);
-		//AccountEXE.ReadAccountTable(objtableModel);
-		//jtblAccounts.setModel(objtableModel);
+		String[] arrColumnNames = {"Borrow Form ID", "Account ID", "ISBN", "Status", "Issue Date", "Due Date"};
+		DefaultTableModel objtableModel = new DefaultTableModel(arrColumnNames, 0);
+		BorrowFormEXE.ReadAccountTable(objtableModel);
+		jtblBorrowerForm.setModel(objtableModel);
+			
 		
-		
-		//accountTableModel = new AccountTableModel();
-		//accountTableModel.accountPanel = this;
-		//jtblAccounts.setModel(accountTableModel);
-		
-		
-		//scrollPane.setViewportView(jtblAccounts);
+		scrollPane.setViewportView(jtblBorrowerForm);
 
 	}
 
