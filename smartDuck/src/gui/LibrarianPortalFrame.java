@@ -71,6 +71,7 @@ public class LibrarianPortalFrame extends JFrame {
 		
 		//WelcomePanel
 		JPanel panelWelcome = new JPanel();
+		panelWelcome.setBackground(Color.WHITE);
 		panelWelcome.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
 		panelWelcome.addMouseListener(new MouseAdapter() {
 			@Override
@@ -102,6 +103,7 @@ public class LibrarianPortalFrame extends JFrame {
 		
 		//Add User Panel
 		JPanel panelForm = new JPanel();
+		panelForm.setBackground(Color.WHITE);
 		panelForm.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
 		panelForm.addMouseListener(new MouseAdapter() {
 			@Override
@@ -131,6 +133,7 @@ public class LibrarianPortalFrame extends JFrame {
 		
 		//AddBookPanel
 		JPanel panelBorrowForm = new JPanel();
+		panelBorrowForm.setBackground(Color.WHITE);
 		panelBorrowForm.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
 		panelBorrowForm.addMouseListener(new MouseAdapter() {
 			@Override
@@ -167,6 +170,7 @@ public class LibrarianPortalFrame extends JFrame {
 		
 		//ReturnFormPanel
 		JPanel panelReturnForm = new JPanel();
+		panelReturnForm.setBackground(Color.WHITE);
 		panelReturnForm.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
 		panelReturnForm.addMouseListener(new MouseAdapter() {
 			@Override
@@ -203,6 +207,7 @@ public class LibrarianPortalFrame extends JFrame {
 		
 		//AddBook Panel
 		JPanel panelAddBook = new JPanel();
+		panelAddBook.setBackground(Color.WHITE);
 		panelAddBook.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
 		panelAddBook.addMouseListener(new MouseAdapter() {
 		@Override
@@ -232,6 +237,7 @@ public class LibrarianPortalFrame extends JFrame {
 		
 		//viewLogPanel
 		JPanel panelViewLog = new JPanel();
+		panelViewLog.setBackground(Color.WHITE);
 		panelViewLog.setBorder(new LineBorder(new Color(255, 228, 181), 5, true));
 		panelViewLog.addMouseListener(new MouseAdapter() {
 			@Override
