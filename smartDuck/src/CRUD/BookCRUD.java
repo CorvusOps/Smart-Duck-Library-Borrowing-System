@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import connection.DbConnection;
 import values.Book;
 
@@ -70,6 +72,41 @@ public class BookCRUD {
 		e.printStackTrace();
 		}  
 	return book;
+	}
+	
+	public static void UpdateBook (Book bookValues) {
+		conn =   DbConnection.getConnection();
+		try {
+			
+		objPreparedStatementObject = conn.prepareStatement("UPDATE book_table SET Title = ?, Author = ? WHERE ISBN = ?");  
+		
+		objPreparedStatementObject.setString(3, bookValues.getISBN());
+		objPreparedStatementObject.setString(1, bookValues.getTitle());
+		objPreparedStatementObject.setString(2, bookValues.getAuthor());
+		
+		objPreparedStatementObject.execute();
+		
+		JOptionPane.showMessageDialog(null, "Saved changes.");
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(null, "Changes cannot be saved. Try again.");
+		}
+	}
+	
+	public static void DeleteBook(String ISBN) {
+		conn =   DbConnection.getConnection();
+		
+		try {
+			objPreparedStatementObject = conn.prepareStatement("DELETE FROM book_table WHERE ISBN = ?");  
+			
+			objPreparedStatementObject.setString(1, ISBN);
+			objPreparedStatementObject.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
