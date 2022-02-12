@@ -149,6 +149,7 @@ public class BorrowFormCRUD {
 					accountValues.setName(ojbResultSetObject.getString("Name"));
 					accountValues.setCourse(ojbResultSetObject.getString("Course"));
 					accountValues.setDepartment(ojbResultSetObject.getString("Department"));
+					accountValues.setEmail(ojbResultSetObject.getString("Email"));
 					}	
 			}catch(Exception e) {
 				e.printStackTrace();
