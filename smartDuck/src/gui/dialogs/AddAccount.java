@@ -163,8 +163,7 @@ public class AddAccount extends JDialog {
 								JOptionPane.showMessageDialog(null, AccountEXE.exeInsertStatements(accountValues));
 								
 								setVisible(false);
-								LibrarianPortalFrame frame = new LibrarianPortalFrame();
-								frame.setVisible(true);
+								
 							} else {
 								JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
 								}

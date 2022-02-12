@@ -135,8 +135,7 @@ public class AddBookDialog extends JDialog {
 								JOptionPane.showMessageDialog(null, BookEXE.exeInsertStatements(bookValues));
 								
 								setVisible(false);
-								LibrarianPortalFrame frame = new LibrarianPortalFrame();
-								frame.setVisible(true);
+								
 							} else {
 								JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
 								}

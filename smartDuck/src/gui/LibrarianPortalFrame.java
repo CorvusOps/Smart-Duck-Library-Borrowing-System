@@ -93,9 +93,8 @@ public class LibrarianPortalFrame extends JFrame {
 		JLabel lblWelcomeImgLabel = new JLabel("");
 		lblWelcomeImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblWelcomeImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image WelcomeImage = new ImageIcon(this.getClass().getResource("/img/smartDuckWelcome_500x125px.png")).getImage();
 		panelWelcome.setLayout(new GridLayout(0, 1, 0, 0));
-		lblWelcomeImgLabel.setIcon(new ImageIcon(WelcomeImage));
+		lblWelcomeImgLabel.setIcon(new ImageIcon(LibrarianPortalFrame.class.getResource("/img/smartDuckWelcome_500x125px.png")));
 		lblWelcomeImgLabel.setBounds(27, 19, 106, 130);
 		panelWelcome.add(lblWelcomeImgLabel);
 		
@@ -123,9 +122,8 @@ public class LibrarianPortalFrame extends JFrame {
 		JLabel lblAddAccountImgLabel = new JLabel("");
 		lblAddAccountImgLabel.setBounds(new Rectangle(23, 123, 45, 67));
 		lblAddAccountImgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		Image FormImage = new ImageIcon(this.getClass().getResource("/img/addUser_w_tag_150px.png")).getImage();
 		panelForm.setLayout(new GridLayout(0, 1, 0, 0));
-		lblAddAccountImgLabel.setIcon(new ImageIcon(FormImage));
+		lblAddAccountImgLabel.setIcon(new ImageIcon(LibrarianPortalFrame.class.getResource("/img/addUser_w_tag_150px.png")));
 		lblAddAccountImgLabel.setBounds(27, 19, 106, 130);
 		panelForm.add(lblAddAccountImgLabel);
 		
