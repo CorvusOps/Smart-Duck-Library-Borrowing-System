@@ -175,6 +175,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 						ReturnFormEXE.setValues(returnFormValues, intBorrowID, returnDate);
 						
 						JOptionPane.showMessageDialog(null, ReturnFormEXE.exeInsertStatements(returnFormValues));
+						setVisible(false);
 					}
 				});
 				ReturnBookButton.setActionCommand("OK");
