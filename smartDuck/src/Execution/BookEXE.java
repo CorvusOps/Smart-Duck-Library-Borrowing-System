@@ -26,7 +26,7 @@ public class BookEXE {
 		}
 	}
 
-	public static void ReadAccountTable(DefaultTableModel table) {
+	public static void ReadBookTable(DefaultTableModel table) {
 		ArrayList<Book> book = BookCRUD.ReadBook();
 		
 		for (Book books : book) {

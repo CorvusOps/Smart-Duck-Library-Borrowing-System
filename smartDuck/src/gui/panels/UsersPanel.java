@@ -25,7 +25,7 @@ import java.awt.event.MouseEvent;
 public class UsersPanel extends JPanel {
 	
 	private JTable jtblAccounts;
-
+	DefaultTableModel objtableModel;
 	/**
 	 * Create the panel.
 	 */
@@ -62,33 +62,10 @@ public class UsersPanel extends JPanel {
 		jpnlHeader.add(jpnlButtons);
 		
 		JButton jbtnUpdate = new JButton("Update");
-		
 		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		jpnlButtons.add(jbtnUpdate);
 		
 		JButton jbtnDelete = new JButton("Delete");
-		/*jbtnDelete.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int rowIndex = jtblStudents.getSelectedRow();
-				
-				if(rowIndex == -1) {
-					JOptionPane.showMessageDialog(
-							null,
-							"Please select a student first before deleting.",
-							"Warning",
-							JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				if(JOptionPane.showConfirmDialog(null, "Are you sure?") == JOptionPane.YES_OPTION) {
-					String studentNumber = (String) studentTableModel.getValueAt(rowIndex, 0);
-					studentRepository.deleteByStudentNumber(studentNumber);
-					studentTableModel.refresh();
-				}
-			}
-		});
-		*/
 		jbtnDelete.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		jpnlButtons.add(jbtnDelete);
 		
@@ -101,7 +78,7 @@ public class UsersPanel extends JPanel {
 		jtblAccounts.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		
 		String[] arrColumnNames = {"Account ID", "Name", "Course", "Department", "Email"};
-		DefaultTableModel objtableModel = new DefaultTableModel(arrColumnNames, 0);
+		objtableModel = new DefaultTableModel(arrColumnNames, 0);
 		AccountEXE.ReadAccountTable(objtableModel);
 		jtblAccounts.setModel(objtableModel);
 				
@@ -128,6 +105,7 @@ public class UsersPanel extends JPanel {
 					editAccDialog.setVisible(true);
 				}
 		});
+		
 	//Delete Action Listener	
 		jbtnDelete.addMouseListener(new MouseAdapter() {
 			@Override
@@ -148,12 +126,16 @@ public class UsersPanel extends JPanel {
 						 
 						AccountCRUD.DeleteAccount(AccountID);
 					//refresh the table
-						//objtableModel.setRowCount(1);
-						//AccountEXE.ReadAccountTable(objtableModel);
+						refreshTable();
 					}
 			}
 		});
 		
+	}
+	
+	public void refreshTable() {
+		objtableModel.setRowCount(0);
+		AccountEXE.ReadAccountTable(objtableModel);
 	}
 
 }
