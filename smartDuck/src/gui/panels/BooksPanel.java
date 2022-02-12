@@ -10,10 +10,19 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import CRUD.BookCRUD;
+import Execution.BookEXE;
 
 @SuppressWarnings("serial")
 public class BooksPanel extends JPanel {
+	
+	private JTable jtblBooks;
+	
+	protected BookCRUD bookCRUD;
 
 	/**
 	 * Create the panel.
@@ -106,23 +115,18 @@ public class BooksPanel extends JPanel {
 		scrollPane.setAlignmentX(0.0f);
 		add(scrollPane);
 		
-		//jtblAccounts = new JTable();
-		//jtblAccounts.setRowHeight(25);
-		//jtblAccounts.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		jtblBooks = new JTable();
+		jtblBooks.setRowHeight(25);
+		jtblBooks.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		
 		
-		//String[] arrColumnNames = {"Account ID", "Account Name", "Address", "City", "Province", "Country", "Role", "Contact Number", "Email"};
-		//DefaultTableModel objtableModel = new DefaultTableModel(arrColumnNames, 0);
-		//AccountEXE.ReadAccountTable(objtableModel);
-		//jtblAccounts.setModel(objtableModel);
+		String[] arrColumnNames = {"ISBN", "Title", "Author"};
+		DefaultTableModel objtableModel = new DefaultTableModel(arrColumnNames, 0);
+		BookEXE.ReadAccountTable(objtableModel);
+		jtblBooks.setModel(objtableModel);
+			
 		
-		
-		//accountTableModel = new AccountTableModel();
-		//accountTableModel.accountPanel = this;
-		//jtblAccounts.setModel(accountTableModel);
-		
-		
-		//scrollPane.setViewportView(jtblAccounts);
+		scrollPane.setViewportView(jtblBooks);
 
 	}
 
