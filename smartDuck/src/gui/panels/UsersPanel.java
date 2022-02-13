@@ -21,6 +21,8 @@ import gui.dialogs.EditAccountDialog;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UsersPanel extends JPanel {
 	
@@ -61,6 +63,15 @@ public class UsersPanel extends JPanel {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		jpnlHeader.add(jpnlButtons);
 		
+		JButton jbtnRefresh = new JButton("Refresh");
+		jbtnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refreshTable();
+			}
+		});
+		jbtnRefresh.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		jpnlButtons.add(jbtnRefresh);
+		
 		JButton jbtnUpdate = new JButton("Update");
 		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		jpnlButtons.add(jbtnUpdate);
@@ -93,7 +104,7 @@ public class UsersPanel extends JPanel {
 					if(rowIndex == -1) {
 						JOptionPane.showMessageDialog(
 								null,
-								"Please select a student first before updating.",
+								"Please select a user first before updating.",
 								"Warning",
 								JOptionPane.WARNING_MESSAGE);
 						return;
@@ -115,7 +126,7 @@ public class UsersPanel extends JPanel {
 					if(rowIndex == -1) {
 						JOptionPane.showMessageDialog(
 								null,
-								"Please select a student first before deleting.",
+								"Please select a user first before deleting.",
 								"Warning",
 								JOptionPane.WARNING_MESSAGE);
 						return;
