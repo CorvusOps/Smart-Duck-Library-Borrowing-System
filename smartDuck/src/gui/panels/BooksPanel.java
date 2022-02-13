@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -66,6 +68,15 @@ public class BooksPanel extends JPanel {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		jpnlHeader.add(jpnlButtons);
 		
+		JButton jbtnRefresh = new JButton("Refresh");
+		jbtnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refreshTable();
+			}
+		});
+		jbtnRefresh.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		jpnlButtons.add(jbtnRefresh);
+		
 		JButton jbtnUpdate = new JButton("Update");
 		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		jpnlButtons.add(jbtnUpdate);
@@ -98,7 +109,7 @@ public class BooksPanel extends JPanel {
 						if(rowIndex == -1) {
 							JOptionPane.showMessageDialog(
 									null,
-									"Please select a student first before updating.",
+									"Please select a book first before updating.",
 									"Warning",
 									JOptionPane.WARNING_MESSAGE);
 							return;
@@ -121,7 +132,7 @@ public class BooksPanel extends JPanel {
 						if(rowIndex == -1) {
 							JOptionPane.showMessageDialog(
 									null,
-									"Please select a student first before deleting.",
+									"Please select a book first before deleting.",
 									"Warning",
 									JOptionPane.WARNING_MESSAGE);
 							return;
