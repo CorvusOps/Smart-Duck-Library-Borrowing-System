@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import CRUD.BorrowFormCRUD;
 import CRUD.BookCRUD;
+import Execution.AccountEXE;
 import Execution.BookEXE;
 import gui.LibrarianPortalFrame;
 import values.Book;
@@ -136,7 +137,7 @@ public class EditBookDialog extends JDialog {
 														TitletextField.getText(),
 														AuthortextField.getText());
 								
-								BookCRUD.UpdateBook(bookValues);
+								JOptionPane.showMessageDialog(null, BookEXE.exeUpdateStatements(bookValues));
 								setVisible(false);
 								
 							} else {

@@ -22,6 +22,7 @@ import CRUD.BorrowFormCRUD;
 import CRUD.AccountCRUD;
 import Execution.AccountEXE;
 import gui.LibrarianPortalFrame;
+import gui.panels.UsersPanel;
 import values.Account;
 
 public class EditAccountDialog extends JDialog {
@@ -165,8 +166,7 @@ public class EditAccountDialog extends JDialog {
 														DepartmenttextField.getText(),
 														EmailtextField.getText());
 								
-								AccountCRUD.UpdateAccount(accountValues);
-							//refresh the table
+								JOptionPane.showMessageDialog(null, AccountEXE.exeUpdateStatements(accountValues));
 								setVisible(false);
 							} else {
 								JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");

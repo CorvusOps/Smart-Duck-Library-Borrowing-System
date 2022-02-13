@@ -25,6 +25,16 @@ public class BookEXE {
 			return "Changes failed to reflect in the database. Try Again";
 		}
 	}
+	
+	public static String exeUpdateStatements (Book book) {
+		int updateCount = BookCRUD.UpdateBook(book);
+		
+		if(updateCount > 0) {
+			return "Saved changes. Reload to view changes.";
+		 } else {
+			 return "Changes cannot be saved. Try again.";
+		 }
+	}
 
 	public static void ReadBookTable(DefaultTableModel table) {
 		ArrayList<Book> book = BookCRUD.ReadBook();
