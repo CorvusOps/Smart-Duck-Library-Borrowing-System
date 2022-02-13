@@ -25,3 +25,5 @@ hs_err_pid*
 
 smartduck/src/connection
 smartduck/.classpath
+
+DbConnection.java
