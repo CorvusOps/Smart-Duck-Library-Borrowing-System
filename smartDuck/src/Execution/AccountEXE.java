@@ -2,6 +2,7 @@ package Execution;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import CRUD.AccountCRUD;
@@ -28,6 +29,16 @@ public class AccountEXE {
 		}
 	}
 
+	public static String exeUpdateStatements (Account account) {
+		int updateCount = AccountCRUD.UpdateAccount(account);
+		
+		if(updateCount > 0) {
+			return "Saved changes. Reload to view changes.";
+		 } else {
+			 return "Changes cannot be saved. Try again.";
+		 }
+	}
+	
 	public static void ReadAccountTable(DefaultTableModel table) {
 		ArrayList<Account> account = AccountCRUD.ReadAccount();
 		

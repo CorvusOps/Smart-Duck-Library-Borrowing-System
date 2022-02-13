@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import connection.DbConnection;
 import values.Account;
 
@@ -86,8 +84,9 @@ public class AccountCRUD {
 	return account;
 	}
 	
-	public static void UpdateAccount (Account accountValues) {
+	public static int UpdateAccount (Account accountValues) {
 		conn =   DbConnection.getConnection();
+		int updateCount = 0;
 		try {
 			
 		objPreparedStatementObject = conn.prepareStatement("UPDATE account_table SET Name = ?, Course = ?, "
@@ -99,15 +98,12 @@ public class AccountCRUD {
 		objPreparedStatementObject.setString(3, accountValues.getDepartment());
 		objPreparedStatementObject.setString(4, accountValues.getEmail());
 		
-		objPreparedStatementObject.execute();
-		
-		JOptionPane.showMessageDialog(null, "Saved changes.");
+		updateCount = objPreparedStatementObject.executeUpdate();
 		
 		}catch(Exception e) {
 			e.printStackTrace();
-			
-			JOptionPane.showMessageDialog(null, "Changes cannot be saved. Try again.");
 		}
+		return updateCount;
 	}
 	public static void DeleteAccount(String AccountID) {
 		conn =   DbConnection.getConnection();
