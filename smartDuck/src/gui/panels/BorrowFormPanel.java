@@ -4,10 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -15,12 +20,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import CRUD.BorrowFormCRUD;
+import Execution.AccountEXE;
 import Execution.BorrowFormEXE;
+import gui.dialogs.EditBorrowForm;
 
 public class BorrowFormPanel extends JPanel {
 	
 	private JTable jtblBorrowerForm;
-	
+	DefaultTableModel objtableModel;
 	protected BorrowFormCRUD borrowFormCRUD;
 
 	/**
@@ -58,57 +65,7 @@ public class BorrowFormPanel extends JPanel {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		jpnlHeader.add(jpnlButtons);
 		
-		JButton jbtnUpdate = new JButton("Update");
-		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		/*jbtnUpdate.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int rowIndex = jtblStudents.getSelectedRow();
-				
-				if(rowIndex == -1) {
-					JOptionPane.showMessageDialog(
-							null,
-							"Please select a student first before updating.",
-							"Warning",
-							JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				String studentNumber = (String) studentTableModel.getValueAt(rowIndex, 0);
-				Student student = studentRepository.getByStudentNumber(studentNumber);
-				
-				updateStudentDialog.initializeDialog(student);
-				updateStudentDialog.setVisible(true);
-			}
-		});
-		*/
-		jpnlButtons.add(jbtnUpdate);
 		
-		JButton jbtnDelete = new JButton("Delete");
-		/*jbtnDelete.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int rowIndex = jtblStudents.getSelectedRow();
-				
-				if(rowIndex == -1) {
-					JOptionPane.showMessageDialog(
-							null,
-							"Please select a student first before deleting.",
-							"Warning",
-							JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				if(JOptionPane.showConfirmDialog(null, "Are you sure?") == JOptionPane.YES_OPTION) {
-					String studentNumber = (String) studentTableModel.getValueAt(rowIndex, 0);
-					studentRepository.deleteByStudentNumber(studentNumber);
-					studentTableModel.refresh();
-				}
-			}
-		});
-		*/
-		jbtnDelete.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		jpnlButtons.add(jbtnDelete);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setAlignmentX(0.0f);
@@ -126,7 +83,66 @@ public class BorrowFormPanel extends JPanel {
 			
 		
 		scrollPane.setViewportView(jtblBorrowerForm);
-
+		
+		
+		
+		JButton jbtnUpdate = new JButton("Update");
+		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		jbtnUpdate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rowIndex = jtblBorrowerForm.getSelectedRow();
+				
+				if(rowIndex == -1) {
+					JOptionPane.showMessageDialog(
+							null,
+							"Please select a borrow form first before updating.",
+							"Warning",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				int borrowID = (int) objtableModel.getValueAt(rowIndex, 0);
+				
+				EditBorrowForm editBorrowDialog = new EditBorrowForm(borrowID);
+				editBorrowDialog.setVisible(true);
+				
+				
+			}
+		});
+		
+		jpnlButtons.add(jbtnUpdate);
+		
+		JButton jbtnDelete = new JButton("Delete");
+		jbtnDelete.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+					int rowIndex = jtblBorrowerForm.getSelectedRow();
+					
+					if(rowIndex == -1) {
+						JOptionPane.showMessageDialog(
+								null,
+								"Please select a student first before deleting.",
+								"Warning",
+								JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					
+					if(JOptionPane.showConfirmDialog(null, "Are you sure?") == JOptionPane.YES_OPTION) {
+						int borrowId = (int) objtableModel.getValueAt(rowIndex, 0);
+						 
+						BorrowFormCRUD.DeleteBorrowForm(borrowId);
+					//refresh the table
+						refreshTable();
+					}
+			}
+		});
+		jbtnDelete.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		jpnlButtons.add(jbtnDelete);
+		
 	}
-
+	public void refreshTable() {
+		objtableModel.setRowCount(0);
+		AccountEXE.ReadAccountTable(objtableModel);
+	}
 }

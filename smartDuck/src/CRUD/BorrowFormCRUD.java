@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import connection.DbConnection;
 import values.Account;
@@ -88,6 +89,47 @@ public class BorrowFormCRUD {
 		e.printStackTrace();
 		}  
 	return borrowForm;
+	}
+	
+	
+	public static void UpdateBorrowForm (BorrowForm borrowform) {
+		conn =   DbConnection.getConnection();
+		try {
+			System.out.println("UpdateBorrowForm :" + borrowform.getBorrowFormID() + " " + borrowform.getAccountID() + " " + borrowform.getISBN() + " " + borrowform.getStatus() + 
+					" " + borrowform.getIssueDate() + " " + borrowform.getDueDate());
+		objPreparedStatementObject = conn.prepareStatement("UPDATE borrowform_table SET AccountID = ?, ISBN = ?, Status = ?, IssueDate = ?, DueDate = ? WHERE borrowformID = ?");  
+		
+		
+		objPreparedStatementObject.setString(1, borrowform.getAccountID());
+		objPreparedStatementObject.setString(2, borrowform.getISBN());
+		objPreparedStatementObject.setString(3, borrowform.getStatus());
+		objPreparedStatementObject.setDate(4, borrowform.getIssueDate());
+		objPreparedStatementObject.setDate(5, borrowform.getDueDate());
+		objPreparedStatementObject.setInt(6, borrowform.getBorrowFormID());
+		
+		objPreparedStatementObject.execute();
+		
+		JOptionPane.showMessageDialog(null, "Saved changes.");
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(null, "Changes cannot be saved. Try again.");
+		}
+	}
+	
+	public static void DeleteBorrowForm(int borrowFormID) {
+		conn =   DbConnection.getConnection();
+		
+		try {
+			objPreparedStatementObject = conn.prepareStatement("DELETE FROM borrowform_table WHERE borrowformID = ?");  
+			
+			objPreparedStatementObject.setInt(1, borrowFormID);
+			objPreparedStatementObject.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 //Retrieve ISBN and Add to Combobox
