@@ -22,17 +22,23 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 
 import CRUD.ReturnFormCRUD;
+import Execution.ReturnFormEXE;
+import values.BorrowForm;
+import values.ReturnForm;
 
-public class ReturnBookDialog extends JDialog {
+public class EditReturnDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
+	private static int returnNo;
+	JComboBox BorrowFormNoComboBox ;
+	JDateChooser ReturnDate;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			ReturnBookDialog dialog = new ReturnBookDialog();
+			EditReturnDialog dialog = new EditReturnDialog(returnNo);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -43,7 +49,7 @@ public class ReturnBookDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ReturnBookDialog() {
+	public EditReturnDialog(int returnNo) {
 		setBounds(100, 100, 450, 500);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 204, 153));
@@ -90,39 +96,47 @@ public class ReturnBookDialog extends JDialog {
 		lblReturnDate.setBounds(40, 192, 84, 16);
 		panel.add(lblReturnDate);
 		
-		JDateChooser ReturnDate = new JDateChooser();
+		ReturnDate = new JDateChooser();
 		ReturnDate.setBounds(164, 192, 200, 20);
 		panel.add(ReturnDate);
 		
-		JComboBox ReturnComboBox = new JComboBox();
-		ReturnComboBox.setBackground(Color.WHITE);
-		ReturnComboBox.setBounds(164, 145, 200, 22);
-		panel.add(ReturnComboBox);
-		ReturnFormCRUD.BorrowComboBox(ReturnComboBox);
+		BorrowFormNoComboBox = new JComboBox();
+		BorrowFormNoComboBox.setBackground(Color.WHITE);
+		BorrowFormNoComboBox.setBounds(164, 145, 200, 22);
+		panel.add(BorrowFormNoComboBox);
+		ReturnFormCRUD.BorrowComboBox(BorrowFormNoComboBox);
+		
+		setTexts(returnNo);
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(255, 204, 153));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton ReturnButton = new JButton("View Details");
-				ReturnButton.addMouseListener(new MouseAdapter() {
+				JButton SaveButton = new JButton("Save");
+				SaveButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						
-						String borrowID = (String)ReturnComboBox.getSelectedItem();
+						String BorrowFormID = (String) BorrowFormNoComboBox.getSelectedItem();
+						int intBorrowFormID = Integer.parseInt(BorrowFormID);
 						java.sql.Date dateReturned = new java.sql.Date(ReturnDate.getDate().getTime());	
 						//fields that needs to be filled out
 						
-							boolean isFilled = !ReturnComboBox.equals("") && !ReturnComboBox.equals("Select")
+							boolean isFilled = !BorrowFormNoComboBox.equals("") && !BorrowFormNoComboBox.equals("Select")
 												&& !dateReturned.equals("");
 							try {
 								if(isFilled) {
-								
-						//redirect to the confirmation dialog
+									
+									ReturnForm returnFormValues = new ReturnForm();
+									returnFormValues.setReturnFormNo(returnNo);
+									
+									ReturnFormEXE.setValues(returnFormValues, intBorrowFormID, dateReturned );
+									
+									ReturnFormCRUD.UpdateReturnForm(returnFormValues);
 									setVisible(false);
-									ReturnBookDetailsDialog viewDetails = new ReturnBookDetailsDialog(borrowID, dateReturned); //passed value to details dialog
-									viewDetails.setVisible(true);
+									
 									
 								} else {
 									JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
@@ -133,9 +147,9 @@ public class ReturnBookDialog extends JDialog {
 						
 					}
 				});
-				ReturnButton.setActionCommand("OK");
-				buttonPane.add(ReturnButton);
-				getRootPane().setDefaultButton(ReturnButton);
+				SaveButton.setActionCommand("OK");
+				buttonPane.add(SaveButton);
+				getRootPane().setDefaultButton(SaveButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
@@ -149,5 +163,21 @@ public class ReturnBookDialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	public void setTexts(int returnNumber) {
+		//set the texts to the JTextFields of the details from the Return Table
+			ReturnForm returnValues = ReturnFormCRUD.getReturnDetails(returnNumber);
+			
+			System.out.println(returnValues.getBorrowFormID());
+			System.out.println("Selected Item before setting text " + BorrowFormNoComboBox.getSelectedItem());
+			
+			BorrowFormNoComboBox.setSelectedItem(returnValues.getBorrowFormID());
+			
+			System.out.println(BorrowFormNoComboBox.getSelectedItem());
+			
+			ReturnDate.setDate(returnValues.getReturnDate());
+			
+		
 	}
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import connection.DbConnection;
 import values.Account;
@@ -85,7 +86,45 @@ public class ReturnFormCRUD {
 	return returnForm;
 	}
 	
-	public static void ReturnComboBox(JComboBox combobox) {
+	
+	public static void UpdateReturnForm (ReturnForm returnVal) {
+		conn =   DbConnection.getConnection();
+		try {
+		
+		objPreparedStatementObject = conn.prepareStatement("UPDATE returnform_table SET BorrowFormID = ?, ReturnDate = ? WHERE ReturnFormNo = ?");  
+		
+		
+		objPreparedStatementObject.setInt(1, returnVal.getBorrowFormID());
+		objPreparedStatementObject.setDate(2, returnVal.getReturnDate());
+		objPreparedStatementObject.setInt(3, returnVal.getReturnFormNo());
+		
+		objPreparedStatementObject.execute();
+		
+		JOptionPane.showMessageDialog(null, "Saved changes.");
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(null, "Changes cannot be saved. Try again.");
+		}
+	}
+	
+	public static void DeleteReturnForm(int ReturnFormNo) {
+		conn =   DbConnection.getConnection();
+		
+		try {
+			objPreparedStatementObject = conn.prepareStatement("DELETE FROM returnform_table WHERE ReturnFormNo = ?");  
+			
+			objPreparedStatementObject.setInt(1,ReturnFormNo);
+			objPreparedStatementObject.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void BorrowComboBox(JComboBox combobox) {
 		conn =   DbConnection.getConnection();
 		try{
 			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM borrowform_table");  
@@ -156,6 +195,27 @@ public class ReturnFormCRUD {
 			return borrowValues;
 		}
 		
+		public static ReturnForm getReturnDetails(int returnNo) {
+			ReturnForm returnValues= new ReturnForm();
+			
+			conn = DbConnection.getConnection();
+			
+			try {
+				objPreparedStatementObject = conn.prepareStatement("SELECT * FROM returnform_table WHERE ReturnFormNo = " + returnNo +"");  
+				objResultSetObject = objPreparedStatementObject.executeQuery();
+				if(objResultSetObject.next()) {
+					returnValues.setReturnFormNo(objResultSetObject.getInt("ReturnFormNo"));
+					returnValues.setBorrowFormID(objResultSetObject.getInt("BorrowFormID"));
+					returnValues.setReturnDate(objResultSetObject.getDate("ReturnDate"));
+					
+					}	
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			return returnValues;
+		}
+		
 		public static void setStatusReturned(int BorrowID) {
 			conn = DbConnection.getConnection();
 			
@@ -169,5 +229,8 @@ public class ReturnFormCRUD {
 			
 			
 		}
+		
+		
+		
 		
 }

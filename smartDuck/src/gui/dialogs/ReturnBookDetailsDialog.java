@@ -203,8 +203,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 		
 			BorrowForm borrowValues = ReturnFormCRUD.getBorrowDetails(BorrowID);
 			String ISBN = borrowValues.getISBN();
-			String AccID = borrowValues.getAccountID()
-					;
+			String AccID = borrowValues.getAccountID();
 			Book bookValues = ReturnFormCRUD.getBookDetails(ISBN);
 			Account accountValues = ReturnFormCRUD.getAccountDetails(AccID);
 			

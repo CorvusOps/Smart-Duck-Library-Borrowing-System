@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -15,12 +18,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import CRUD.ReturnFormCRUD;
+import Execution.AccountEXE;
 import Execution.ReturnFormEXE;
+import gui.dialogs.EditReturnDialog;
 
 public class ReturnFormPanel extends JPanel {
 	
 	private JTable jtblReturnForm;
-	
+	DefaultTableModel objtableModel;
 	protected ReturnFormCRUD returnFormCRUD;
 
 	/**
@@ -58,61 +63,6 @@ public class ReturnFormPanel extends JPanel {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		jpnlHeader.add(jpnlButtons);
 		
-		JButton jbtnUpdate = new JButton("Update");
-		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		/*jbtnUpdate.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int rowIndex = jtblStudents.getSelectedRow();
-				
-				if(rowIndex == -1) {
-					JOptionPane.showMessageDialog(
-							null,
-							"Please select a student first before updating.",
-							"Warning",
-							JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				String studentNumber = (String) studentTableModel.getValueAt(rowIndex, 0);
-				Student student = studentRepository.getByStudentNumber(studentNumber);
-				
-				updateStudentDialog.initializeDialog(student);
-				updateStudentDialog.setVisible(true);
-			}
-		});
-		*/
-		jpnlButtons.add(jbtnUpdate);
-		
-		JButton jbtnDelete = new JButton("Delete");
-		/*jbtnDelete.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int rowIndex = jtblStudents.getSelectedRow();
-				
-				if(rowIndex == -1) {
-					JOptionPane.showMessageDialog(
-							null,
-							"Please select a student first before deleting.",
-							"Warning",
-							JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				if(JOptionPane.showConfirmDialog(null, "Are you sure?") == JOptionPane.YES_OPTION) {
-					String studentNumber = (String) studentTableModel.getValueAt(rowIndex, 0);
-					studentRepository.deleteByStudentNumber(studentNumber);
-					studentTableModel.refresh();
-				}
-			}
-		});
-		*/
-		jbtnDelete.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		jpnlButtons.add(jbtnDelete);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setAlignmentX(0.0f);
-		add(scrollPane);
 		
 		jtblReturnForm = new JTable();
 		jtblReturnForm.setRowHeight(25);
@@ -120,12 +70,76 @@ public class ReturnFormPanel extends JPanel {
 		
 		
 		String[] arrColumnNames = {"Return Form No.", "Borrow Form ID", "Return Date"};
-		DefaultTableModel objtableModel = new DefaultTableModel(arrColumnNames, 0);
+		objtableModel = new DefaultTableModel(arrColumnNames, 0);
 		ReturnFormEXE.ReadAccountTable(objtableModel);
 		jtblReturnForm.setModel(objtableModel);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setAlignmentX(0.0f);
+		add(scrollPane);
 		scrollPane.setViewportView(jtblReturnForm);
+		
+		JButton jbtnUpdate = new JButton("Update");
+		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		jbtnUpdate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rowIndex = jtblReturnForm.getSelectedRow();
+				
+				if(rowIndex == -1) {
+					JOptionPane.showMessageDialog(
+							null,
+							"Please select an item first before updating.",
+							"Warning",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				int returnNo = (int) objtableModel.getValueAt(rowIndex, 0);
+			//	System.out.println("Row index value: " + objtableModel.getValueAt(rowIndex, 0));
+				EditReturnDialog editReturnForm = new EditReturnDialog(returnNo);
+				editReturnForm.setVisible(true);
 
+			}
+		});
+		
+		jpnlButtons.add(jbtnUpdate);
+		
+		JButton jbtnDelete = new JButton("Delete");
+		jbtnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int rowIndex = jtblReturnForm.getSelectedRow();
+				
+				if(rowIndex == -1) {
+					JOptionPane.showMessageDialog(
+							null,
+							"Please select an item first before deleting.",
+							"Warning",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				if(JOptionPane.showConfirmDialog(null, "Are you sure?") == JOptionPane.YES_OPTION) {
+					int ReturnFormNo = (int) jtblReturnForm.getValueAt(rowIndex, 0);
+					ReturnFormCRUD.DeleteReturnForm(ReturnFormNo);
+					//refresh the table
+					refreshTable();
+				
+				}
+				
+			}
+		});
+		
+		jbtnDelete.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		jpnlButtons.add(jbtnDelete);
+		
+		
+		
+	}
+	public void refreshTable() {
+		objtableModel.setRowCount(0);
+		ReturnFormEXE.ReadAccountTable(objtableModel);
 	}
 
 }
