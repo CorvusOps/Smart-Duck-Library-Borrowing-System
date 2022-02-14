@@ -77,7 +77,7 @@ public class BorrowFormPanel extends JPanel {
 		
 		
 		String[] arrColumnNames = {"Borrow Form ID", "Account ID", "ISBN", "Status", "Issue Date", "Due Date"};
-		DefaultTableModel objtableModel = new DefaultTableModel(arrColumnNames, 0);
+		objtableModel = new DefaultTableModel(arrColumnNames, 0);
 		BorrowFormEXE.ReadAccountTable(objtableModel);
 		jtblBorrowerForm.setModel(objtableModel);
 			
@@ -143,6 +143,6 @@ public class BorrowFormPanel extends JPanel {
 	}
 	public void refreshTable() {
 		objtableModel.setRowCount(0);
-		AccountEXE.ReadAccountTable(objtableModel);
+		BorrowFormEXE.ReadAccountTable(objtableModel);
 	}
 }
