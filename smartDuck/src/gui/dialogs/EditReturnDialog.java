@@ -119,8 +119,8 @@ public class EditReturnDialog extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						
-						String BorrowFormID = (String) BorrowFormNoComboBox.getSelectedItem();
-						int intBorrowFormID = Integer.parseInt(BorrowFormID);
+						int BorrowFormID = (int) BorrowFormNoComboBox.getSelectedItem();
+						
 						java.sql.Date dateReturned = new java.sql.Date(ReturnDate.getDate().getTime());	
 						//fields that needs to be filled out
 						
@@ -132,7 +132,7 @@ public class EditReturnDialog extends JDialog {
 									ReturnForm returnFormValues = new ReturnForm();
 									returnFormValues.setReturnFormNo(returnNo);
 									
-									ReturnFormEXE.setValues(returnFormValues, intBorrowFormID, dateReturned );
+									ReturnFormEXE.setValues(returnFormValues, BorrowFormID, dateReturned );
 									
 									ReturnFormCRUD.UpdateReturnForm(returnFormValues);
 									setVisible(false);

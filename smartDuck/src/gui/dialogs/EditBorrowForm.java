@@ -21,10 +21,10 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
-import CRUD.BookCRUD;
 import CRUD.BorrowFormCRUD;
 import CRUD.ReturnFormCRUD;
 import Execution.BorrowFormEXE;
+import gui.panels.BorrowFormPanel;
 import values.BorrowForm;
 
 public class EditBorrowForm extends JDialog {
@@ -179,7 +179,6 @@ public class EditBorrowForm extends JDialog {
 									//Set Values and Update DB
 									BorrowFormEXE.setValues(borrowFormValues, AccountID, 
 											ISBN, Status, issuedate, duedate);
-									
 									BorrowFormCRUD.UpdateBorrowForm(borrowFormValues);
 									setVisible(false);
 									
@@ -223,4 +222,6 @@ public class EditBorrowForm extends JDialog {
 			IssueDate.setDate(borrowValues.getIssueDate());
 			DueDate.setDate(borrowValues.getDueDate());
 	}
+	
+	
 }
