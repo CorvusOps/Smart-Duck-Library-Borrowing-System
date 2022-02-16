@@ -130,7 +130,7 @@ public class ReturnFormCRUD {
 			objPreparedStatementObject = conn.prepareStatement("SELECT * FROM borrowform_table");  
 			objResultSetObject = objPreparedStatementObject.executeQuery();
 			while(objResultSetObject.next()) {
-				String borrowformID = objResultSetObject.getString("borrowformID");
+				int borrowformID = objResultSetObject.getInt("borrowformID");
 				combobox.addItem(borrowformID);
 			}
 			

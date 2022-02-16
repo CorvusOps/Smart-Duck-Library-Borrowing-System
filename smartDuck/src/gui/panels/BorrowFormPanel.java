@@ -71,6 +71,15 @@ public class BorrowFormPanel extends JPanel {
 		scrollPane.setAlignmentX(0.0f);
 		add(scrollPane);
 		
+		JButton jbtnRefresh = new JButton("Refresh");
+		jbtnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refreshTable();
+			}
+		});
+		jbtnRefresh.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		jpnlButtons.add(jbtnRefresh);
+		
 		jtblBorrowerForm = new JTable();
 		jtblBorrowerForm.setRowHeight(25);
 		jtblBorrowerForm.setFont(new Font("Segoe UI", Font.PLAIN, 16));

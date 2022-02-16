@@ -63,6 +63,15 @@ public class ReturnFormPanel extends JPanel {
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		jpnlHeader.add(jpnlButtons);
 		
+		JButton jbtnRefresh = new JButton("Refresh");
+		jbtnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refreshTable();
+			}
+		});
+		jbtnRefresh.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		jpnlButtons.add(jbtnRefresh);
+		
 		
 		jtblReturnForm = new JTable();
 		jtblReturnForm.setRowHeight(25);
