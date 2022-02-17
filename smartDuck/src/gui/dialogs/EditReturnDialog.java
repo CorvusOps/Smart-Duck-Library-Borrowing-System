@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 
 import CRUD.ReturnFormCRUD;
+import Execution.BorrowFormEXE;
 import Execution.ReturnFormEXE;
 import values.BorrowForm;
 import values.ReturnForm;
@@ -134,7 +135,7 @@ public class EditReturnDialog extends JDialog {
 									
 									ReturnFormEXE.setValues(returnFormValues, BorrowFormID, dateReturned );
 									
-									ReturnFormCRUD.UpdateReturnForm(returnFormValues);
+									JOptionPane.showMessageDialog(null, ReturnFormEXE.exeUpdateStatements(returnFormValues));
 									setVisible(false);
 									
 									
@@ -168,16 +169,8 @@ public class EditReturnDialog extends JDialog {
 	public void setTexts(int returnNumber) {
 		//set the texts to the JTextFields of the details from the Return Table
 			ReturnForm returnValues = ReturnFormCRUD.getReturnDetails(returnNumber);
-			
-			System.out.println(returnValues.getBorrowFormID());
-			System.out.println("Selected Item before setting text " + BorrowFormNoComboBox.getSelectedItem());
-			
+					
 			BorrowFormNoComboBox.setSelectedItem(returnValues.getBorrowFormID());
-			
-			System.out.println(BorrowFormNoComboBox.getSelectedItem());
-			
 			ReturnDate.setDate(returnValues.getReturnDate());
-			
-		
 	}
 }

@@ -23,6 +23,7 @@ import com.toedter.calendar.JDateChooser;
 
 import CRUD.BorrowFormCRUD;
 import CRUD.ReturnFormCRUD;
+import Execution.AccountEXE;
 import Execution.BorrowFormEXE;
 import gui.panels.BorrowFormPanel;
 import values.BorrowForm;
@@ -175,13 +176,12 @@ public class EditBorrowForm extends JDialog {
 									java.sql.Date issuedate = new java.sql.Date(IssueDate.getDate().getTime());
 									java.sql.Date duedate = new java.sql.Date(DueDate.getDate().getTime());
 					
-									//System.out.println(AccountID + " " + ISBN + " " + Status+ " " +issuedate + " " + duedate);
 									//Set Values and Update DB
 									BorrowFormEXE.setValues(borrowFormValues, AccountID, 
 											ISBN, Status, issuedate, duedate);
-									BorrowFormCRUD.UpdateBorrowForm(borrowFormValues);
-									setVisible(false);
 									
+									JOptionPane.showMessageDialog(null, BorrowFormEXE.exeUpdateStatements(borrowFormValues));
+									setVisible(false);
 									
 								} else {
 									JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
@@ -207,14 +207,11 @@ public class EditBorrowForm extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		
-		
 	}
 	
 	public void setTexts(int borrowID) {
 		//set the texts to the JTextFields of the details from the Borrower Table
 			BorrowForm borrowValues = ReturnFormCRUD.getBorrowDetails(borrowID);
-			
 			
 			ISBNcomboBox.setSelectedItem(borrowValues.getISBN());
 			AccountIDcomboBox.setSelectedItem(borrowValues.getAccountID());
@@ -222,6 +219,4 @@ public class EditBorrowForm extends JDialog {
 			IssueDate.setDate(borrowValues.getIssueDate());
 			DueDate.setDate(borrowValues.getDueDate());
 	}
-	
-	
 }

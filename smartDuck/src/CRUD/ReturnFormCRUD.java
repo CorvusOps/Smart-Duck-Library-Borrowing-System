@@ -56,8 +56,7 @@ public class ReturnFormCRUD {
 		return intResult;
 	}
 	
-	
-	
+
 	public static ArrayList<ReturnForm> ReadReturnForm() {
 		ArrayList<ReturnForm> returnForm = new ArrayList<ReturnForm>();
 		try {
@@ -79,34 +78,27 @@ public class ReturnFormCRUD {
 		}catch(Exception e){
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-		}  
-		
-		
-		
+		}  		
 	return returnForm;
 	}
 	
-	
-	public static void UpdateReturnForm (ReturnForm returnVal) {
+	public static int UpdateReturnForm (ReturnForm returnVal) {
 		conn =   DbConnection.getConnection();
+		int updateCount = 0;
 		try {
 		
 		objPreparedStatementObject = conn.prepareStatement("UPDATE returnform_table SET BorrowFormID = ?, ReturnDate = ? WHERE ReturnFormNo = ?");  
-		
 		
 		objPreparedStatementObject.setInt(1, returnVal.getBorrowFormID());
 		objPreparedStatementObject.setDate(2, returnVal.getReturnDate());
 		objPreparedStatementObject.setInt(3, returnVal.getReturnFormNo());
 		
-		objPreparedStatementObject.execute();
-		
-		JOptionPane.showMessageDialog(null, "Saved changes.");
+		updateCount = objPreparedStatementObject.executeUpdate();
 		
 		}catch(Exception e) {
 			e.printStackTrace();
-			
-			JOptionPane.showMessageDialog(null, "Changes cannot be saved. Try again.");
 		}
+		return updateCount;
 	}
 	
 	public static void DeleteReturnForm(int ReturnFormNo) {

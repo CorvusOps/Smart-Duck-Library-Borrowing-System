@@ -92,11 +92,10 @@ public class BorrowFormCRUD {
 	}
 	
 	
-	public static void UpdateBorrowForm (BorrowForm borrowform) {
+	public static int UpdateBorrowForm (BorrowForm borrowform) {
 		conn =   DbConnection.getConnection();
+		int updateCount = 0;
 		try {
-			System.out.println("UpdateBorrowForm :" + borrowform.getBorrowFormID() + " " + borrowform.getAccountID() + " " + borrowform.getISBN() + " " + borrowform.getStatus() + 
-					" " + borrowform.getIssueDate() + " " + borrowform.getDueDate());
 		objPreparedStatementObject = conn.prepareStatement("UPDATE borrowform_table SET AccountID = ?, ISBN = ?, Status = ?, IssueDate = ?, DueDate = ? WHERE borrowformID = ?");  
 		
 		
@@ -107,15 +106,12 @@ public class BorrowFormCRUD {
 		objPreparedStatementObject.setDate(5, borrowform.getDueDate());
 		objPreparedStatementObject.setInt(6, borrowform.getBorrowFormID());
 		
-		objPreparedStatementObject.execute();
-		
-		JOptionPane.showMessageDialog(null, "Saved changes.");
+		updateCount = objPreparedStatementObject.executeUpdate();
 		
 		}catch(Exception e) {
 			e.printStackTrace();
-			
-			JOptionPane.showMessageDialog(null, "Changes cannot be saved. Try again.");
 		}
+		return updateCount;
 	}
 	
 	public static void DeleteBorrowForm(int borrowFormID) {
