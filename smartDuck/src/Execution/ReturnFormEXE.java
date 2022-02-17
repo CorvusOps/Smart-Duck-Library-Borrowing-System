@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
+import CRUD.BorrowFormCRUD;
 import CRUD.ReturnFormCRUD;
+import values.BorrowForm;
 import values.ReturnForm;
 
 public class ReturnFormEXE {
@@ -24,6 +26,16 @@ public class ReturnFormEXE {
 		} else {
 			return "Changes failed to reflect in the database. Try Again";
 		}
+	}
+	
+	public static String exeUpdateStatements (ReturnForm returnForm) {
+		int updateCount = ReturnFormCRUD.UpdateReturnForm(returnForm);
+		
+		if(updateCount > 0) {
+			return "Saved changes. Reload to view changes.";
+		 } else {
+			 return "Changes cannot be saved. Try again.";
+		 }
 	}
 
 	public static void ReadAccountTable(DefaultTableModel table) {
