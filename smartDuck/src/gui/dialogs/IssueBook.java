@@ -151,11 +151,16 @@ public class IssueBook extends JDialog {
 								if(isFilled) {
 									java.sql.Date issuedate = new java.sql.Date(IssueDate.getDate().getTime());
 									java.sql.Date duedate = new java.sql.Date(DueDate.getDate().getTime());
-						//redirect to the confirmation dialog
+									
+								// comparing issue date and due date and throwing warning if issue date is after due date
+									if(issuedate.compareTo(duedate) > 0) {
+										JOptionPane.showMessageDialog(null, "Not saved. Due date can't be before Issue date.");
+									} else {
 									setVisible(false);
+								//redirect to the confirmation dialog
 									IssuanceConfirmation confirmation = new IssuanceConfirmation(ISBN, AccountID, "Issued", issuedate, duedate);
 									confirmation.setVisible(true);
-									
+									}
 								} else {
 									JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
 									}
