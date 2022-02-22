@@ -175,14 +175,17 @@ public class EditBorrowForm extends JDialog {
 								if(isFilled) {
 									java.sql.Date issuedate = new java.sql.Date(IssueDate.getDate().getTime());
 									java.sql.Date duedate = new java.sql.Date(DueDate.getDate().getTime());
-					
+									
+									if(issuedate.compareTo(duedate) > 0) {
+										JOptionPane.showMessageDialog(null, "Not saved. Due date can't be before Issue date.");
+									} else {
 									//Set Values and Update DB
 									BorrowFormEXE.setValues(borrowFormValues, AccountID, 
 											ISBN, Status, issuedate, duedate);
 									
 									JOptionPane.showMessageDialog(null, BorrowFormEXE.exeUpdateStatements(borrowFormValues));
 									setVisible(false);
-									
+									}
 								} else {
 									JOptionPane.showMessageDialog(null, "Not saved. Input Required Fields.");
 									}
