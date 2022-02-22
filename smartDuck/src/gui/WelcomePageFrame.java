@@ -9,6 +9,9 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,12 +24,17 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+import connection.DbConnection;
+
 @SuppressWarnings("serial")
 public class WelcomePageFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtFldUsername;
 
+	static Connection conn = null;
+	static PreparedStatement objPreparedStatementObject = null;
+	static ResultSet objResultSetObject = null;
 	/**
 	 * Launch the application.
 	 */
@@ -128,21 +136,26 @@ public class WelcomePageFrame extends JFrame {
 		MenuButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				conn =   DbConnection.getConnection();
 				
-
 				String username = txtFldUsername.getText();
 				String password = String.valueOf(passwordField.getPassword());
 				
-				
-				
-
 				try {
-					if(username.equals("admin") && password.equals("admin")) {
-						setVisible(false);
+					objPreparedStatementObject = conn.prepareStatement("SELECT * FROM admin_table WHERE username = ? AND password = ?");
+					objPreparedStatementObject.setString(1, username);
+					objPreparedStatementObject.setString(2, password);
+					objResultSetObject = objPreparedStatementObject.executeQuery();
+					
+					
+					if(objResultSetObject.next()) {
+						dispose();
 						LibrarianPortalFrame frame = new LibrarianPortalFrame();
 						frame.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Wrong username and password. Try Again.");
+						txtFldUsername.setText("");
+						passwordField.setText("");
 					}
 				} catch (Exception e1) {
 					e1.printStackTrace();

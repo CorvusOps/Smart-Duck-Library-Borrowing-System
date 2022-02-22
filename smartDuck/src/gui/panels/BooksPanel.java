@@ -52,7 +52,7 @@ public class BooksPanel extends JPanel {
 		jpnlHeader.setLayout(new BoxLayout(jpnlHeader, BoxLayout.X_AXIS));
 		
 		JLabel lblNewLabel = new JLabel("Book Panel");
-		lblNewLabel.setForeground(new Color(128, 0, 128));
+		lblNewLabel.setForeground(new Color(255, 165, 0));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
 		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 24));
@@ -69,6 +69,8 @@ public class BooksPanel extends JPanel {
 		jpnlHeader.add(jpnlButtons);
 		
 		JButton jbtnRefresh = new JButton("Refresh");
+		jbtnRefresh.setBackground(new Color(245, 222, 179));
+		jbtnRefresh.setForeground(new Color(0, 0, 0));
 		jbtnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				refreshTable();
@@ -78,10 +80,14 @@ public class BooksPanel extends JPanel {
 		jpnlButtons.add(jbtnRefresh);
 		
 		JButton jbtnUpdate = new JButton("Update");
+		jbtnUpdate.setForeground(new Color(0, 0, 0));
+		jbtnUpdate.setBackground(new Color(245, 222, 179));
 		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		jpnlButtons.add(jbtnUpdate);
 		
 		JButton jbtnDelete = new JButton("Delete");
+		jbtnDelete.setForeground(new Color(0, 0, 0));
+		jbtnDelete.setBackground(new Color(245, 222, 179));
 		jbtnDelete.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		jpnlButtons.add(jbtnDelete);
 		
