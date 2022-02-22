@@ -23,6 +23,7 @@ import CRUD.BorrowFormCRUD;
 import Execution.AccountEXE;
 import Execution.BorrowFormEXE;
 import gui.dialogs.EditBorrowForm;
+import java.awt.SystemColor;
 
 public class BorrowFormPanel extends JPanel {
 	
@@ -49,7 +50,7 @@ public class BorrowFormPanel extends JPanel {
 		jpnlHeader.setLayout(new BoxLayout(jpnlHeader, BoxLayout.X_AXIS));
 		
 		JLabel lblNewLabel = new JLabel("Borrow Form Panel");
-		lblNewLabel.setForeground(new Color(128, 0, 128));
+		lblNewLabel.setForeground(new Color(255, 165, 0));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
 		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 24));
@@ -72,6 +73,8 @@ public class BorrowFormPanel extends JPanel {
 		add(scrollPane);
 		
 		JButton jbtnRefresh = new JButton("Refresh");
+		jbtnRefresh.setForeground(new Color(0, 0, 0));
+		jbtnRefresh.setBackground(new Color(245, 222, 179));
 		jbtnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				refreshTable();
@@ -96,6 +99,8 @@ public class BorrowFormPanel extends JPanel {
 		
 		
 		JButton jbtnUpdate = new JButton("Update");
+		jbtnUpdate.setForeground(new Color(0, 0, 0));
+		jbtnUpdate.setBackground(new Color(245, 222, 179));
 		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		jbtnUpdate.addActionListener(new ActionListener() {
 			@Override
@@ -123,6 +128,8 @@ public class BorrowFormPanel extends JPanel {
 		jpnlButtons.add(jbtnUpdate);
 		
 		JButton jbtnDelete = new JButton("Delete");
+		jbtnDelete.setForeground(new Color(0, 0, 0));
+		jbtnDelete.setBackground(new Color(245, 222, 179));
 		jbtnDelete.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

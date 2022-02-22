@@ -47,7 +47,7 @@ public class ReturnFormPanel extends JPanel {
 		jpnlHeader.setLayout(new BoxLayout(jpnlHeader, BoxLayout.X_AXIS));
 		
 		JLabel lblNewLabel = new JLabel("Return Form Panel");
-		lblNewLabel.setForeground(new Color(128, 0, 128));
+		lblNewLabel.setForeground(new Color(255, 165, 0));
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
 		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 24));
@@ -64,6 +64,7 @@ public class ReturnFormPanel extends JPanel {
 		jpnlHeader.add(jpnlButtons);
 		
 		JButton jbtnRefresh = new JButton("Refresh");
+		jbtnRefresh.setBackground(new Color(245, 222, 179));
 		jbtnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				refreshTable();
@@ -89,6 +90,7 @@ public class ReturnFormPanel extends JPanel {
 		scrollPane.setViewportView(jtblReturnForm);
 		
 		JButton jbtnUpdate = new JButton("Update");
+		jbtnUpdate.setBackground(new Color(245, 222, 179));
 		jbtnUpdate.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		jbtnUpdate.addActionListener(new ActionListener() {
 			@Override
@@ -115,6 +117,7 @@ public class ReturnFormPanel extends JPanel {
 		jpnlButtons.add(jbtnUpdate);
 		
 		JButton jbtnDelete = new JButton("Delete");
+		jbtnDelete.setBackground(new Color(245, 222, 179));
 		jbtnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
