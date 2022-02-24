@@ -37,7 +37,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 	private TextField BorrowFormNo;
 	
 	
-	static String borrowID;
+	static Integer borrowID;
 	static Date returnDate;
 	static java.sql.Connection conn = null;
 	/**
@@ -56,7 +56,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ReturnBookDetailsDialog(String borrowID, Date returnDate) {
+	public ReturnBookDetailsDialog(Integer borrowID, Date returnDate) {
 		setBounds(100, 100, 450, 500);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(255, 204, 153));
@@ -150,8 +150,7 @@ public class ReturnBookDetailsDialog extends JDialog {
 		BorrowFormNo.setBounds(170, 116, 201, 22);
 		panel.add(BorrowFormNo);
 		
-		int intBorrowID = Integer.parseInt(borrowID);
-		setTexts(intBorrowID);
+		setTexts(borrowID);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBackground(new Color(255, 204, 153));
@@ -166,13 +165,13 @@ public class ReturnBookDetailsDialog extends JDialog {
 			
 						//set status from borrowform_table to "returned"
 						
-						ReturnFormCRUD.setStatusReturned(intBorrowID);
+						ReturnFormCRUD.setStatusReturned(borrowID);
 						
 						//System.out.println("Inserting values values in return form");
 						//insert data to returnform_table in the database
 						
 						ReturnForm returnFormValues = new ReturnForm();
-						ReturnFormEXE.setValues(returnFormValues, intBorrowID, returnDate);
+						ReturnFormEXE.setValues(returnFormValues, borrowID, returnDate);
 						
 						JOptionPane.showMessageDialog(null, ReturnFormEXE.exeInsertStatements(returnFormValues));
 						setVisible(false);
