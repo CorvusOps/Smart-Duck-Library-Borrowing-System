@@ -110,12 +110,11 @@ public class ReturnBookDialog extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						
-						String borrowID = (String)ReturnComboBox.getSelectedItem();
+						Integer borrowID = (int)ReturnComboBox.getSelectedItem();
 						java.sql.Date dateReturned = new java.sql.Date(ReturnDate.getDate().getTime());	
 						//fields that needs to be filled out
 						
-							boolean isFilled = !ReturnComboBox.equals("") && !ReturnComboBox.equals("Select")
-												&& !dateReturned.equals("");
+							boolean isFilled = !ReturnComboBox.equals("") && !dateReturned.equals("");
 							try {
 								if(isFilled) {
 								
